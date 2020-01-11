@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="idDaoContact" class="dao.DAOContact"/>
+	 
+	 <!-- Création d'un bean contact restreint  -->
+	 
+	<bean id ="contact" class = "domain.Contact">
+		<property name = "idContact" value= "1"/>
+		<property name = "firstName" value = "Mbaraka"/>
+		<property name = "lastName" value = "Andlat"/>
+		<property name  = "email" value = "andlat269@live.fr"/>
+		<property name = "adress" value = "4 Rue George Sand"/>
+	 </bean>
+	 
+	 
+	 	 <!-- Création d'un bean phone   -->
+	 
+	 <bean id="phoneNumber" class = "domain.PhoneNumber">
+		<property name = "idPhone" value= "1"/>
+		<property name = "phoneNum" value = "0752862388"/>
+		<property name = "phoneKind" value = "Portable"/>	
+		<property name = "contactPhone"> <ref bean="contact"/></property> 
+	</bean>
+	
+	
+		 <!-- Création d'un bean entreprise   -->
+	
+	<bean id="enterprise" class = "domain.Entreprise">
+		<property name = "nom" value= "HER"/>
+		<property name = "email" value = "her@gmail.com"/>
+		<property name = "adress" value = "3 Rue de la Paix"/>
+		<property name = "numSiret" value = "802 954 785 00029"/>
+		<property name = "phones"> <ref bean="phoneNumber"/></property> 
+	</bean>
+	
+	
+		 <!-- Création d'un bean adress restreint  -->
+	
+	<bean id ="adress" class = "domain.Adress">
+		<property name = "idAdress" value= "1"/>
+		<property name = "street" value = "Rue de la Paix"/>
+		<property name = "city" value = "Palaiseau"/>
+		<property name  = "zip" value = "91120"/>
+		<property name = "country" value = "FRANCE"/>
+		<property name = "contactAdress"> <ref bean="contact"/></property> 
+	 </bean>
+	 
+
+	<!-- Création d'un bean ContactGroup -->
+
+		
+	<bean id = "contactGroup" class = "domain.ContactGroup">
+		<property name = "idContactGroup" value = "1"/>
+		<property name = "nameContactGroup" value ="VIP"/>
+		<property name = "version" value = "1"/>
+		<property name = "contactGroup"> <ref bean="contact"/></property> 
+		
+	</bean>
+	
+	
+	</beans>

@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Ajouter un Contact Form</title>
+</head>
+<body>
+    <h1>Ajouter un Contact</h1>
+    <form action="ajouterContact" method="post">
+        <table cellpadding="3pt">
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="firstName" size="30" /></td>
+            </tr>
+            <tr>
+                <td>Last Name :</td>
+                <td><input type="text" name="lastName" size="30" /></td>
+            </tr>
+ 
+            <tr>
+                <td>email :</td>
+                <td><input type="text" name="email" size="30" /></td>
+            </tr>
+            <tr>
+                <td>Phone :</td>
+                <td><input type="text" name="phone" size="30" /></td>
+            </tr>
+            <tr>
+                <td>City :</td>
+                <td><input type="text" name="city" size="30" /></td>
+            </tr>
+        </table>
+        <p />
+        <input type="submit" value="Ajouter" />
+    </form>
+    <h1>Supprimer un Contact</h1>
+    <form action="supprimerContact" method="post">
+        <table cellpadding="3pt">
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="firstName" size="30" /></td>
+            </tr>
+            <tr>
+                <td>Last Name :</td>
+                <td><input type="text" name="lastName" size="30" /></td>
+            </tr>
+        </table>
+        <p />
+        <input type="submit" value="Supprimer" />
+    </form>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
+      3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="entities">
+  <class name="Contact" table="Contact_Table">
+  
+  
+  <id name="id" type="long" column="ID_CONTACT" ><generator class="increment"/></id>
+  <property name="firstName"><column name="FIRSTNAME" /></property>
+  <property name="lastName"><column name="LASTNAME"/></property>
+  <property name="email"><column name="EMAIL"/></property>
+    
+  <set name="tels" table="phoneNumber" inverse=" true">   
+	  <key column="ID_CONTACT" />  
+	  <one-to-many class="PhoneNumber"/>  
+  </set> 
+  
+  <set name="groups" table="PROFIL" cascade="save-update">  
+		<key column="ID_CONTACT"/>  
+		<many-to-many class="ContactGroup" column="ID_GROUPE"/>  
+  </set>
+	
+  </class>
+</hibernate-mapping>

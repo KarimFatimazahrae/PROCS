@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+<struts-config>
+<form-beans>
+<form-bean name="AddContactValidationForm"
+type="org.lip6.struts.actionForm.AddContactValidationForm"/>
+<form-bean name="DeleteContactValidationForm"
+type="org.lip6.struts.actionForm.DeleteContactValidationForm"/>
+<form-bean name="UpdateContactValidationForm"
+type="org.lip6.struts.actionForm.UpdateContactValidationForm"/>
+<form-bean name="AddGroupValidationForm"
+type="org.lip6.struts.actionForm.AddGroupValidationForm"/>
+<form-bean name="DeleteGroupValidationForm"
+type="org.lip6.struts.actionForm.DeleteGroupValidationForm"/>
+<form-bean name="UpdateGroupValidationForm"
+type="org.lip6.struts.actionForm.UpdateGroupValidationForm"/>
+<form-bean name="SearchValidationForm"
+type="org.lip6.struts.actionForm.SearchValidationForm"/>
+</form-beans>
+
+<action-mappings>
+<action path="/SearchContact" forward="/pages/searchContact.jsp" />
+<action path="/SearchContact"
+type="org.lip6.struts.servletAction.SearchAction"
+name="SearchValidationForm" scope="request"
+input="/pages/searchContact.jsp">
+<forward name="success" path="/pages/listeContacts.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+
+
+<!-- <action path="/ContactCreation" forward="/pages/creationContact.jsp" />-->
+<action path="/ContactCreation" type="org.lip6.struts.servletAction.LoadGroups" >
+<forward name="success" path="/pages/creationContact.jsp"/>
+</action>
+<action path="/AddContact"
+type="org.lip6.struts.servletAction.AddContactAction"
+name="AddContactValidationForm" scope="request"
+input="/pages/creationContact.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+
+
+<action path="/ContactSuppression" forward="/pages/suppressionContact.jsp" />
+<action path="/DeleteContact"
+type="org.lip6.struts.servletAction.DeleteContactAction"
+name="DeleteContactValidationForm" scope="request"
+input="/pages/suppressionContact.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+<action path="/ContactModification" forward="/pages/modificationContact.jsp" />
+<action path="/UpdateContact"
+type="org.lip6.struts.servletAction.UpdateContactAction"
+name="UpdateContactValidationForm" scope="request"
+input="/pages/modificationContact.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+
+<action path="/GroupeCreation" forward="/pages/creationGroupe.jsp" />
+<action path="/AddGroup"
+type="org.lip6.struts.servletAction.AddGroupAction"
+name="AddGroupValidationForm" scope="request"
+input="/pages/creationGroupe.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+<action path="/GroupeSuppression" forward="/pages/suppressionGroupe.jsp" />
+<action path="/DeleteGroup"
+type="org.lip6.struts.servletAction.DeleteGroupAction"
+name="DeleteGroupValidationForm" scope="request"
+input="/pages/suppressionGroupe.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+<action path="/GroupeModification" forward="/pages/modificationGroupe.jsp" />
+<action path="/UpdateGroup"
+type="org.lip6.struts.servletAction.UpdateGroupAction"
+name="UpdateGroupValidationForm" scope="request"
+input="/pages/modificationGroupe.jsp">
+<forward name="success" path="/pages/main.jsp" />
+<forward name="error" path="/pages/error.jsp" />
+</action>
+<action path="/ListeContacts" type="org.lip6.struts.servletAction.ShowListeContactsAction" >
+<forward name="success" path="/pages/listeContacts.jsp"/>
+</action>
+
+<action path="/AfficheContact" type="org.lip6.struts.servletAction.ShowContactInfosAction" >
+<forward name="success" path="/pages/modificationContact.jsp"/>
+</action>
+
+<action path="/SupprimeContact" type="org.lip6.struts.servletAction.ShowListeContactsAction" >
+<forward name="success" path="/pages/suppressionContact.jsp"/>
+</action>
+<!-- <action path="/ListeContacts" type="org.lip6.struts.servletAction.ShowListeContactsAction" scope="request">
+			<forward name="success" path="/pages/main.jsp"/>
+ 
+		</action>-->
+</action-mappings>
+<!-- ========== Ressources de definitions de messages
+=========================== -->
+<message-resources parameter="Resources" />
+</struts-config>

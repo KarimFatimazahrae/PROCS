@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Entreprise.java&apos; to &apos;Procs/src/entities&apos;&#x0D;&#x0A;- Original project: &apos;HibernateN&apos;&#x0D;&#x0A;- Destination element: &apos;Procs/src/entities&apos;&#x0D;&#x0A;- Original element: &apos;domain.Entreprise.java&apos;" description="Copy compilation unit" destination="=Procs/src&lt;entities" element1="/procs-master\/Contact\/src&lt;domain{Entreprise.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1576251537270" units="1" version="1.0"/>
+</session>

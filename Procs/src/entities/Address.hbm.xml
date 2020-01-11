@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
+      3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="entities">
+  <class name="Address" table="Address_Table">
+  
+  <id name="idAddress" type="long" column="ID_ADDRESS" ><generator class="increment"/></id>
+
+  <property name="street" type="string" not-null="true"  > <column name="STREET" /></property>
+  <property name="city" type="string" not-null="true" ><column name="CITY"/></property>
+  <property name="zip" type="string" not-null="true" > <column name="ZIP"/></property>
+  <property name="country" type="string" not-null="true" > <column name="COUNTRY"/></property>
+  
+  </class>
+</hibernate-mapping>

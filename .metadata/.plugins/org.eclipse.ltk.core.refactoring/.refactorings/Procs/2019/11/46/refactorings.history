@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;actionForm&apos; to &apos;HibernateN/procs-master/Contact/src&apos;&#x0D;&#x0A;- Original project: &apos;Procs&apos;&#x0D;&#x0A;- Destination element: &apos;HibernateN/procs-master/Contact/src&apos;&#x0D;&#x0A;- Original element: &apos;Procs/src/actionForm&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="=HibernateN/procs-master\/Contact\/src" element1="/src&lt;actionForm" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1573912445756" version="1.0"/>
+</session>

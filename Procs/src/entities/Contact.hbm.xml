@@ -1,0 +1,37 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 
+      3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="entities">
+  <class name="Contact" table="Contact_Table" discriminator-value="Contact" >
+  
+  
+  <id name="id" type="long" column="ID_CONTACT" ><generator class="increment"/></id>
+  
+  <discriminator column="TYPE" type="string"/>
+  <version name="version" access="field" column="VERSION" /><!-- Pas de lecture sale -->
+  
+  <property name="firstName"><column name="FIRSTNAME" /></property>
+  <property name="lastName"><column name="LASTNAME"/></property>
+  <property name="email"><column name="EMAIL"/></property>
+  
+  <!--Association avec l'adresse  -->
+  <many-to-one name="adresse" column="ID_ADDRESS"  optimistic-lock="false" class="Address" cascade="all" />
+   
+   <!--Association avec le télephone  -->
+  <set name="tels" table="phoneNumber" inverse=" true"  cascade = "all-delete-orphan">   
+	  <key column="ID_CONTACT" />  
+	  <one-to-many class="PhoneNumber"/>  
+  </set> 
+  
+  <!--Association avec le groupe  -->
+  <set name="groups" table="PROFIL" cascade="save-update">  
+		<key column="ID_CONTACT"/>  
+		<many-to-many class="ContactGroup" column="ID_GROUPE"/>  
+  </set>
+  
+	<!--Héritage avec contact et entreprise  -->
+  <subclass name="Entreprise" discriminator-value="Entreprise">
+	<property name="numeroSiret" column="numeroSiret" type="long"/>
+  </subclass>
+  
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elements>
+ <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5"> 
+  <display-name>Procs</display-name>
+
+	<servlet>
+        <display-name>ajouterContact</display-name>
+        <servlet-name>ajouterContact</servlet-name>
+        <servlet-class>servlet.AddContactController</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <display-name>supprimerContact</display-name>
+        <servlet-name>supprimerContact</servlet-name>
+        <servlet-class>servlet.DeleteContactController</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <display-name>Success</display-name>
+        <servlet-name>Success</servlet-name>
+        <servlet-class>servlet.Success</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ajouterContact</servlet-name>
+        <url-pattern>/ajouterContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>supprimererContact</servlet-name>
+        <url-pattern>/supprimerContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Success</servlet-name>
+        <url-pattern>/Success</url-pattern>
+    </servlet-mapping>
+    
+    <welcome-file-list>
+        <welcome-file>pages/acceuil.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
+</elements>

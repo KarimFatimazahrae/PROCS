@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;procsN/Contact/target/classes/domain/IDaoContact.class&apos; to &apos;IDaoContact.java&apos;" description="Rename resource &apos;IDaoContact.class&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Contact/target/classes/domain/IDaoContact.class" name="IDaoContact.java" stamp="1573333397854" updateReferences="true"/>
+</session>

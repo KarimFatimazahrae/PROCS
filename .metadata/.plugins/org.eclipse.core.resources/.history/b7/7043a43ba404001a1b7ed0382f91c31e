@@ -1,0 +1,67 @@
+package domain;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
+import entities.Contact;
+import entities.PhoneNumber;
+import util.HibernateUtil;
+
+public class ContactDAO {
+	
+	static Session session = null;
+	static Transaction tx = null;
+	
+	public static void addContact(Contact contact, PhoneNumber telPort) 
+	{
+		
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		tx = session.beginTransaction();
+		
+		telPort.setContact(contact);
+		contact.getTels().add(telPort);
+		
+		session.save(contact);	
+		tx.commit();	
+	}
+	
+	
+	public void addPhoneNumber(PhoneNumber tel){
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();  
+		session.beginTransaction();            
+	    session.save(tel);               
+		session.getTransaction().commit();
+		
+	}
+	
+//	public void updatePhoneNumber (Long idContact, PhoneNumber tel){
+//		
+//		Session session = HibernateUtil.getSessionFactory().getCurrentSession();  
+//		
+//		DetachedCriteria filter = DetachedCriteria.forClass(PhoneNumber.class);
+//		filter.add(Restrictions.like("contact.num", idContact));
+//		filter.add(Restrictions.like("typeTel", "portable"));
+//		PhoneNumber telp = (PhoneNumber) getHibernateTemplate().findByCriteria(filter).get(0);
+//		telp.setNumTel(tel.getNumTel());
+//		getHibernateTemplate().update(telp);
+//	}
+
+		private Object getHibernateTemplate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+		public static void main(String[]args) {
+		
+		System.out.println("debut");
+		//addContact();
+		System.out.println("fin");
+	}
+
+}
