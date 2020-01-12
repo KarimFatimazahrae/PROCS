@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class Contact {
 
+	private long id;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private long id;
 	private String type;
 	private int version; //pour pas avoir une lecture sale
 	

@@ -17,18 +17,14 @@ public class DeleteContactControllerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("############################################################### I am in the delete part");
-		String nom = request.getParameter("firstName");
-		String prenom = request.getParameter("lastName");
-		String email = request.getParameter("email");
-		//        String phone = request.getParameter("phone");
-		//        String city = request.getParameter("city");
-
+		System.out.println("################################## I am in the delete part #############################");
+		String prenom = request.getParameter("firstName");
+		String nom = request.getParameter("lastName");
+		
 		HttpSession session = request.getSession(true);
 		try {
 			ContactDAO userDAO = new ContactDAO();
-			Contact c = new Contact(nom, prenom, email);
-			userDAO.deleteContact(c.getId());
+			userDAO.deleteContact(prenom,nom);
 			response.sendRedirect("Success");
 
 			//            ContactDAO.addUserDetails(nom, prenom, email, phone, city);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
@@ -69,19 +70,21 @@ public class ContactDAO {
 	}
 	
 	
-	public void deleteContact (long id){
+	public void deleteContact (String firstname, String lastname ){
 		try {
-		System.out.println("je suis dans DeleteContact **********************************************************");
+		System.out.println("**************************je suis dans DeleteContact **********************************************************");
 		
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
-	
-		Contact c = (Contact) session.get(Contact.class, id);
 		
+		Query query = session.createQuery("select id from Contact where firstname =:firstname and lastname =:lastname");
+		query.setParameter("firstname", firstname);
+		query.setParameter("lastname", lastname);
+		Long id = Long.parseLong(String.valueOf(query.list().get(0)));
+        
+        Contact c = (Contact) session.get(Contact.class, id);
 		session.delete(c);
-		tx.commit();
-		
-		
+		tx.commit();	
 	} catch (HibernateException e) {
 		e.printStackTrace();
 	}
