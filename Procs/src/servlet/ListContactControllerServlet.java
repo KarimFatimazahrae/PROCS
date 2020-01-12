@@ -26,13 +26,23 @@ public class ListContactControllerServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		try {
 			ContactDAO userDAO = new ContactDAO();
-			// Creation du contact
-		
-			List<Contact> categoryList = userDAO.listContact();
-
-			request.setAttribute("listContact", categoryList);  
-			getServletConfig().getServletContext().getRequestDispatcher("/pages/listContact.jsp").forward(request,response);
+			// Recuperer la liste des contacts
 			
+			if((request.getParameter("id"))==null) {
+				List<Contact> categoryList = userDAO.listContact();
+				request.setAttribute("listContact", categoryList);  
+				getServletConfig().getServletContext().getRequestDispatcher("/pages/listContact.jsp").forward(request,response);
+				
+			} else {
+				System.out.println("############ looking for contact ########");
+				Long id = Long.parseLong(request.getParameter("id").toString());
+				System.out.println("\n"+"############ id ######## " + id);
+				Contact cd = userDAO.ReadContact(id);
+				System.out.println("\n"+"############ Contact ######## " + cd.toString());
+				
+				request.setAttribute("Contact", cd);  
+				getServletConfig().getServletContext().getRequestDispatcher("/pages/afficherContact.jsp").forward(request,response);
+			}
 			//response.sendRedirect("/pageslistContanct.jsp");
 		} catch (Exception e) {
 

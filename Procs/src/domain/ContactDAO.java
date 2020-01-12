@@ -88,7 +88,7 @@ public class ContactDAO {
 		}
 	}
 
-//	Liste des contacts
+//	Affiche la Liste de tous les contacts
 	public List<Contact> listContact() {
 		try {
 			System.out.println("********************************je suis dans Liste des contacts *********************************");
@@ -109,25 +109,32 @@ public class ContactDAO {
 	}
 
 	public Contact ReadContact(long id) {
-		Contact contact = null;
+
 		System.out.println("je suis dans read*****************************************************************");
 		try {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			contact = new Contact(
-					(Contact) session.createCriteria(Contact.class).add(Restrictions.like("id", id)).uniqueResult());
-			// System.out.println(contact.toString());
-			session.flush();
-			session.evict(contact);
-			// session.clear();
-		} catch (HibernateException e) {
-			System.out.println("catch1");
-			e.printStackTrace();
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+
+			Query query = session
+					.createQuery("from Contact where id =:id");
+			query.setParameter("id", id);
+			
+//			Query query2 = session
+//					.createQuery("from Telephone where id_contact =:id");
+//			query2.setParameter("id", id);
+//			
+//			Query query3 = session
+//					.createQuery("from Address where id_contact =:id");
+//			query3.setParameter("id", ((Contact)query.uniqueResult()).getAdresse());
+//			
+			return (Contact) query.uniqueResult();
+
 		} catch (Exception e) {
 			System.out.println("Catch2");
+			
 			e.printStackTrace();
+			return null;
 		}
-
-		return contact;
 	}
 
 	public Contact getContact(long idContact) {
