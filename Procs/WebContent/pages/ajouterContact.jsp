@@ -28,8 +28,20 @@
                 <td><input type="text" name="phone" size="30" /></td>
             </tr>
             <tr>
+                <td>street :</td>
+                <td><input type="text" name="street" size="30" /></td>
+            </tr>
+            <tr>
                 <td>City :</td>
                 <td><input type="text" name="city" size="30" /></td>
+            </tr>
+            <tr>
+                <td>ZipCode :</td>
+                <td><input type="text" name="zip" size="30" /></td>
+            </tr>
+            <tr>
+                <td>Country :</td>
+                <td><input type="text" name="country" size="30" /></td>
             </tr>
         </table>
         <p />

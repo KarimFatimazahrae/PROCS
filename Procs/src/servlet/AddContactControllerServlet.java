@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,45 +18,51 @@ import entities.Address;
 
 public class AddContactControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 
-    protected void doPost(HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-    	System.out.print("#########################################################I am here");
-        String nom = request.getParameter("firstName");
-        String prenom= request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String phone1 = request.getParameter("phone_portable");
-        String phone2 = null;
-        if (!request.getParameter("phone_fixe").isEmpty())
-        	 phone2 = request.getParameter("phone_fixe");
-        String street = request.getParameter("street");
-    	String city = request.getParameter("city");
-    	String zip = request.getParameter("zip");
-    	String country = request.getParameter("country");
-        
- 
-        HttpSession session = request.getSession(true);
-        try {
-            ContactDAO userDAO = new ContactDAO();
-            Contact c= new Contact(nom,prenom,email);
-            userDAO.addContact(c);
-            Address ad = new Address(street,city,zip,country);
-            
-            PhoneNumber ph = new PhoneNumber("portable",phone1,c);
-            PhoneNumber ph2;
-            if(!phone2.isEmpty())
-            	ph2 = new  PhoneNumber("Fixe",phone1,c);
-            
-            response.sendRedirect("Success");
-               
-         
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String nom = request.getParameter("firstName");
+		String prenom = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String phone1 = request.getParameter("phone");
+//        String phone2 = null;
+//        if (!request.getParameter("phone_fixe").isEmpty())
+//        	 phone2 = request.getParameter("phone_fixe");
+		String street = request.getParameter("street");
+		String city = request.getParameter("city");
+		String zip = request.getParameter("zip");
+		String country = request.getParameter("country");
+
+		HttpSession session = request.getSession(true);
+		try {
+			ContactDAO userDAO = new ContactDAO();
+			// Creation du contact
+			Contact c = new Contact(nom, prenom, email);
+			// creation de l'adresse
+			Address ad = new Address(street, city, zip, country);
+			c.setAdresse(ad);
+
+			// Creation du numero telephone
+			PhoneNumber ph = new PhoneNumber("portable", phone1, c);
+			Set<PhoneNumber> tels = new HashSet<PhoneNumber>();
+			tels.add(ph);
+			c.setTels(tels);
+			// Sauvegarde du contact
+			userDAO.addContact(c);
+
+//            PhoneNumber ph2;
+//            if(!phone2.isEmpty())
+//            	ph2 = new  PhoneNumber("Fixe",phone1,c);
+
+			response.sendRedirect("Success");
+
 //            ContactDAO.addUserDetails(nom, prenom, email, phone, city);
 //            ContactDAO.sendRedirect("Success");
-        } catch (Exception e) {
- 
-            e.printStackTrace();
-        }
- 
-    }
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+	}
 
 }
