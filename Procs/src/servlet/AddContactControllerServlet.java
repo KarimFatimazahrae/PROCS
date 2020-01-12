@@ -37,7 +37,7 @@ public class AddContactControllerServlet extends HttpServlet {
 		try {
 			ContactDAO userDAO = new ContactDAO();
 			// Creation du contact
-			Contact c = new Contact(nom, prenom, email);
+			Contact c = new Contact(prenom, nom, email);
 			// creation de l'adresse
 			Address ad = new Address(street, city, zip, country);
 			c.setAdresse(ad);
