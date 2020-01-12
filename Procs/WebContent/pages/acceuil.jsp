@@ -13,5 +13,10 @@
     <h1>Supprimer un Contact</h1>
     <button onclick="window.location.href = 'pages/supprimerContact.jsp';">Supprimer Contact</button>
     
+    <h1>Liste de tous les Contacts</h1>
+    <form action="${pageContext.request.contextPath}/listContact" method="post">
+    <p />
+        <input type="submit" value="Afficher" />
+    </form>
 </body>
 </html>

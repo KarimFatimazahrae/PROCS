@@ -13,6 +13,11 @@
         <servlet-class>servlet.DeleteContactControllerServlet</servlet-class>
     </servlet>
     <servlet>
+        <display-name>listContact</display-name>
+        <servlet-name>listContact</servlet-name>
+        <servlet-class>servlet.ListContactControllerServlet</servlet-class>
+    </servlet>
+    <servlet>
         <display-name>Success</display-name>
         <servlet-name>Success</servlet-name>
         <servlet-class>servlet.Success</servlet-class>
@@ -26,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>supprimerContact</servlet-name>
         <url-pattern>/supprimerContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>listContact</servlet-name>
+        <url-pattern>/listContact</url-pattern>
     </servlet-mapping>
     
     <servlet-mapping>
