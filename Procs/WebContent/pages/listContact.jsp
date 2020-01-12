@@ -39,12 +39,20 @@
 					<input type="hidden" name="id" value="<%=c.getId()%>" />
 					<input type="submit" value="Afficher Contact" />
 				</form></td>
-			<td><button
-					onclick="window.location.href = 'pages/supprimerContact.jsp';">Modifier
-					Contact</button></td>
-			<td><button
-					onclick="window.location.href = 'pages/supprimerContact.jsp';">Supprimer
-					Contact</button></td>
+			<td><form
+					action="${pageContext.request.contextPath}/modifierContact"
+					method="post">
+					<p />
+					<input type="hidden" name="id" value="<%=c.getId()%>" />
+					<input type="submit" value="Modifier Contact" />
+				</form></td>
+			<td><form
+					action="${pageContext.request.contextPath}/supprimerContactFromList"
+					method="post">
+					<p />
+					<input type="hidden" name="id" value="<%=c.getId()%>" />
+					<input type="submit" value="Supprimer Contact" />
+				</form></td>
 		</tr>
 		<%
 			}

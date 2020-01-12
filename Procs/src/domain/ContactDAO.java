@@ -66,6 +66,16 @@ public class ContactDAO {
 		tx.commit();
 	}
 
+	public void updateContact(Contact contact) {
+		System.out.println("********************je suis dans addContact********************************************");
+
+		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		tx = session.beginTransaction();
+
+		session.update(contact);
+		tx.commit();
+	}
+
 	public void deleteContact(String firstname, String lastname) {
 		try {
 			System.out.println(
@@ -88,10 +98,26 @@ public class ContactDAO {
 		}
 	}
 
+	public void deleteContactList(Long id) {
+		try {
+			System.out.println(
+					"**************************je suis dans DeleteContact from contact's list **********************************************************");
+
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			tx = session.beginTransaction();
+			Contact c = (Contact) session.get(Contact.class, id);
+			session.delete(c);
+			tx.commit();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+
 //	Affiche la Liste de tous les contacts
 	public List<Contact> listContact() {
 		try {
-			System.out.println("********************************je suis dans Liste des contacts *********************************");
+			System.out.println(
+					"********************************je suis dans Liste des contacts *********************************");
 
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
@@ -115,10 +141,9 @@ public class ContactDAO {
 			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			tx = session.beginTransaction();
 
-			Query query = session
-					.createQuery("from Contact where id =:id");
+			Query query = session.createQuery("from Contact where id =:id");
 			query.setParameter("id", id);
-			
+
 //			Query query2 = session
 //					.createQuery("from Telephone where id_contact =:id");
 //			query2.setParameter("id", id);
@@ -131,7 +156,7 @@ public class ContactDAO {
 
 		} catch (Exception e) {
 			System.out.println("Catch2");
-			
+
 			e.printStackTrace();
 			return null;
 		}

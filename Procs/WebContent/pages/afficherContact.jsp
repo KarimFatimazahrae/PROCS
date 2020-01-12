@@ -32,17 +32,15 @@
                 <td><%=c.getEmail()%></td>
             </tr>
             <%
-            int i=1;
 			for (PhoneNumber tel : c.getTels()) {
 			%>
 			<tr>
-                <td>Phone kind <%System.out.print(i);%>:   </td>
+                <td>Phone kind :   </td>
                 <td><%=tel.getPhoneKind()%></td>
-                <td>Phone Number <%System.out.print(i);%>:   </td>
+                <td>Phone Number :   </td>
                 <td><%=tel.getPhoneNumber()%></td>
             </tr>
 			<%
-			i++;
 			}
 			%>
             <tr>

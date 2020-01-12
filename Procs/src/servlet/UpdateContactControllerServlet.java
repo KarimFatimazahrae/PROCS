@@ -17,7 +17,7 @@ import entities.Contact;
 import entities.PhoneNumber;
 import entities.Address;
 
-public class ListContactControllerServlet extends HttpServlet {
+public class UpdateContactControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -25,27 +25,17 @@ public class ListContactControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		try {
-			ContactDAO userDAO = new ContactDAO();
-			// Recuperer la liste des contacts
+				ContactDAO userDAO = new ContactDAO();
+			// Recuperer le contact à modifier
 			
-			if((request.getParameter("id"))==null) {
-				List<Contact> categoryList = userDAO.listContact();
-				request.setAttribute("listContact", categoryList);  
-				getServletConfig().getServletContext().getRequestDispatcher("/pages/listContact.jsp").forward(request,response);
-				
-			} else {
 				Long id = Long.parseLong(request.getParameter("id").toString());
 				Contact cd = userDAO.ReadContact(id);
 				
 				request.setAttribute("Contact", cd);  
-				getServletConfig().getServletContext().getRequestDispatcher("/pages/afficherContact.jsp").forward(request,response);
-			}
-			//response.sendRedirect("/pageslistContanct.jsp");
-		} catch (Exception e) {
-
+				getServletConfig().getServletContext().getRequestDispatcher("/pages/modifierContact.jsp").forward(request,response);
+			} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }

@@ -8,6 +8,16 @@
         <servlet-class>servlet.AddContactControllerServlet</servlet-class>
     </servlet>
     <servlet>
+        <display-name>modifierContact2</display-name>
+        <servlet-name>modifierContact2</servlet-name>
+        <servlet-class>servlet.UpdateContactControllerServletbis</servlet-class>
+    </servlet>
+    <servlet>
+        <display-name>supprimerContactFromList</display-name>
+        <servlet-name>supprimerContactFromList</servlet-name>
+        <servlet-class>servlet.DeleteContactListControllerServlet</servlet-class>
+    </servlet>
+    <servlet>
         <display-name>supprimerContact</display-name>
         <servlet-name>supprimerContact</servlet-name>
         <servlet-class>servlet.DeleteContactControllerServlet</servlet-class>
@@ -18,6 +28,12 @@
         <servlet-class>servlet.ListContactControllerServlet</servlet-class>
     </servlet>
     <servlet>
+        <display-name>modifierContact</display-name>
+        <servlet-name>modifierContact</servlet-name>
+        <servlet-class>servlet.UpdateContactControllerServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
         <display-name>Success</display-name>
         <servlet-name>Success</servlet-name>
         <servlet-class>servlet.Success</servlet-class>
@@ -27,6 +43,18 @@
     <servlet-mapping>
         <servlet-name>ajouterContact</servlet-name>
         <url-pattern>/ajouterContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modifierContact</servlet-name>
+        <url-pattern>/modifierContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>modifierContact2</servlet-name>
+        <url-pattern>/modifierContact2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>supprimerContactFromList</servlet-name>
+        <url-pattern>/supprimerContactFromList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>supprimerContact</servlet-name>
