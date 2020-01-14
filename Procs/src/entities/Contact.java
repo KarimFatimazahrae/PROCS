@@ -4,16 +4,20 @@ package entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 public class Contact {
-
+	
 	private long id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String type;
 	private int version; //pour pas avoir une lecture sale
-	
 	
 	private Set<PhoneNumber> tels = new HashSet<PhoneNumber>();
 	private Set<ContactGroup> groups = new HashSet<ContactGroup>();

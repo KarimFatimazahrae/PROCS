@@ -14,12 +14,12 @@
   <property name="email"><column name="EMAIL"/></property>
   
   <!--Association avec l'adresse  -->
-  <many-to-one name="adresse" column="ID_ADDRESS"  optimistic-lock="false" class="Address" cascade="all" />
+  <many-to-one name="adresse" column="ID_ADDRESS"  fetch="join" lazy="false"  optimistic-lock="false" class="Address" cascade="all" />
    
    <!--Association avec le télephone  -->
-  <set name="tels" table="phoneNumber" inverse=" true"  cascade = "all-delete-orphan">   
+  <set name="tels" table="phoneNumber" inverse=" true" fetch="join" lazy="false"  cascade = "all-delete-orphan">   
 	  <key column="ID_CONTACT" />  
-	  <one-to-many class="PhoneNumber"/>  
+	  <one-to-many class="PhoneNumber" />  
   </set> 
   
   <!--Association avec le groupe  -->

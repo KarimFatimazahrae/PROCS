@@ -26,7 +26,9 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
-		String phone1 = request.getParameter("phone");
+		String phoneKind = request.getParameter("phoneKind");
+		String phone1 = request.getParameter("phoneNumber");
+		
 		String street = request.getParameter("street");
 		String city = request.getParameter("city");
 		String zip = request.getParameter("zip");
@@ -35,25 +37,33 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		try {
 			ContactDAO userDAO = new ContactDAO();
-			// Creation du contact
-			//Contact c = new Contact(lastName, firstName, email);
-			// creation de l'adresse
-			//Address ad = new Address(street, city, zip, country);
-			//c.setAdresse(ad);
-
-			// Creation du numero telephone
-			//PhoneNumber ph = new PhoneNumber("portable", phone1, c);
-			//Set<PhoneNumber> tels = new HashSet<PhoneNumber>();
-			//tels.add(ph);
-			//c.setTels(tels);
-			// Sauvegarde du contact
-			//userDAO.updateContact(c);
-			//response.sendRedirect("Success");
 			
+			/* Updating the Contact */		
 			Contact ctt = userDAO.getContact(id);
 			ctt.setFirstName(firstName);
 			ctt.setLastName(lastName);
 			ctt.setEmail(email);
+
+			/* Updating the Address */
+			Address ad = ctt.getAdresse();
+			ad.setStreet(street);
+			ad.setCity(city);
+			ad.setZip(zip);
+			ad.setCountry(country);
+			ctt.setAdresse(ad);
+			
+			/* Updating Phone Number */
+			Set<PhoneNumber> tels =ctt.getTels();
+			for(PhoneNumber tel : tels) {
+				tel.setPhoneKind(phoneKind);
+				tel.setPhoneNumber(phone1);
+				
+				
+				tel.setContact(ctt);
+				userDAO.updateTelephone(tel);
+			}
+			ctt.setTels(tels);
+			
 			userDAO.updateContact(ctt);
 			response.sendRedirect("Success");				
 

@@ -37,11 +37,11 @@
 			%>
 			<tr>
                 <td>Phone Kind :</td>
-                <td><input type="text" name="email" value=<%=tel.getPhoneKind()%> size="30" /></td>
+                <td><input type="text" name="phoneKind" value=<%=tel.getPhoneKind()%> size="30" /></td>
             </tr>
             <tr>
                 <td>Phone Number :</td>
-                <td><input type="text" name="email" value=<%=tel.getPhoneNumber()%> size="30" /></td>
+                <td><input type="text" name="phoneNumber" value=<%=tel.getPhoneNumber()%> size="30" /></td>
             </tr>
             <%
 			}

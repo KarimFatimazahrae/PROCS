@@ -30,10 +30,13 @@ public class ContactDAO {
 
 	/* ******************    CRUD Groupe     ******************  */
 	public ContactGroup getGroupe(long idGroupe) {
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session = HibernateUtil.getSessionFactory().openSession();
 		tx = session.beginTransaction();
 
 		ContactGroup g = (ContactGroup) session.get(ContactGroup.class, idGroupe);
+		tx.commit();
+		session.close();
+		
 		return g;
 	}
 
@@ -76,6 +79,7 @@ public class ContactDAO {
 			Contact c = (Contact) session.get(Contact.class, id);
 			tx.commit();
 			session.close();
+			
 			return c;
 			
 		} catch (HibernateException e) {
@@ -107,7 +111,7 @@ public class ContactDAO {
 	public void updateContact(Contact contact) {
 		
 		try {
-			System.out.println("********************je suis dans updateContact********************************************");
+			System.out.println("********************  je suis dans updateContact  ********************************************");
 					
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
@@ -121,11 +125,29 @@ public class ContactDAO {
 		}
 	}
 
+	public void updateTelephone(PhoneNumber phone1) {
+		
+		try {
+			System.out.println("********************  je suis dans updatePhone  ********************************************");
+					
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			
+			
+			session.saveOrUpdate(phone1);
+			tx.commit();
+			session.close();
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}	
+	}
+
 	
 	public void deleteContact(String firstname, String lastname) {
 		try {
 			System.out.println(
-					"**************************je suis dans DeleteContact **********************************************************");
+					"**************************   je suis dans DeleteContact   ************************************************");
 
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
@@ -144,7 +166,7 @@ public class ContactDAO {
 	public void deleteContactList(Long id) {
 		try {
 			System.out.println(
-					"**************************je suis dans DeleteContact from contact's list **********************************************************");
+					"********************   je suis dans DeleteContact from contact's list   **********************************************");
 
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
@@ -163,16 +185,21 @@ public class ContactDAO {
 	public List<Contact> listContact() {
 		try {
 			System.out.println(
-					"********************************je suis dans Liste des contacts *********************************");
+					"*************************  je suis dans Liste des contacts    *********************************");
 
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
 			Query query = session.createQuery("from Contact");
 
 			System.out.println("\n");
 			System.out.println(String.valueOf(query.list()));
-			return (List<Contact>) query.list();
+			
+			List<Contact> lc = (List<Contact>) query.list();
+			tx.commit();
+			session.close();
+			
+			return lc;
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -183,19 +210,22 @@ public class ContactDAO {
 	
 	public Contact ReadContact(long id) {
 
-		System.out.println("je suis dans read*****************************************************************");
+		System.out.println("******************  je suis dans read   **********************");
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
 			Query query = session.createQuery("from Contact where id =:id");
 			query.setParameter("id", id);
+			
+			Contact c = (Contact) query.uniqueResult();
+			tx.commit();
 			session.close();
-				
-			return (Contact) query.uniqueResult();
+			
+			return c;
 
 		} catch (Exception e) {
-			System.out.println("Catch2");
+			System.out.println("Erreur lors de la lecture du contact");
 			e.printStackTrace();
 			return null;
 		}
@@ -226,26 +256,6 @@ public class ContactDAO {
 		session.getTransaction().commit();
 	}
 
-//    public void updateContact (Contact contactTmp, Contact contact,PhoneNumber telp,PhoneNumber telf, long numSiret){
-//		
-//		if (numSiret <= 0) {
-//				contactTmp.setType("Contact");
-//		} else {
-//			if (contactTmp instanceof Entreprise) {
-//				((Entreprise) contactTmp).setNumeroSiret(numSiret);
-//			}
-//		}
-//		contactTmp.setLastName(contact.getLastName());
-//		contactTmp.setFirstName(contact.getFirstName());
-//		contactTmp.setEmail(contact.getEmail());
-//		contactTmp.getAdresse().setZip((contact.getAdresse().getZip()));
-//		contactTmp.getAdresse().setCity((contact.getAdresse().getCity()));
-//		contactTmp.getAdresse().setStreet((contact.getAdresse().getStreet()));
-//		contactTmp.getAdresse().setCountry((contact.getAdresse().getCountry()));
-//		updateTelPort(contactTmp.getId(),telp);
-//		updateTelFix(contactTmp.getId(), telf);
-//		
-//		getHibernateTemplate().merge(contactTmp);
-//	}
 
+	
 }
