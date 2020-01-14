@@ -17,6 +17,9 @@
     <form action="${pageContext.request.contextPath}/modifierContact2" method="post">
         <table cellpadding="3pt">
             <tr>
+                <td><input type="hidden" name="id" value=<%=c.getId()%> size="30" /></td>
+            </tr>
+            <tr>
                 <td>First Name:</td>
                 <td><input type="text" name="firstName" value=<%=c.getFirstName()%> size="30" /></td>
             </tr>

@@ -27,8 +27,8 @@ public class ContactDAO {
 
 	static Session session = null;
 	static Transaction tx = null;
-	/////////////////////////////////////////// CRUD Groupe
 
+	/* ******************    CRUD Groupe     ******************  */
 	public ContactGroup getGroupe(long idGroupe) {
 		session = HibernateUtil.getSessionFactory().getCurrentSession();
 		tx = session.beginTransaction();
@@ -37,82 +37,128 @@ public class ContactDAO {
 		return g;
 	}
 
-	/////////////////////////////////////////// CRUD Contact
+	
+	/*  ******************    CRUD Contact      ******************   */   
+	public Contact getContact(long idContact) {
+		session = HibernateUtil.getSessionFactory().openSession();
+		tx = session.beginTransaction();
+
+		Contact c = (Contact) session.get(Contact.class, idContact);
+		tx.commit();
+		session.close();
+		
+		return c;	
+	}
+
+
+	public Contact getContactFromName(String firstname, String lastname) {
+		
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			
+			
+			System.out.println("voici les prenoms et noms: " + firstname + "   " + lastname);
+			Query query = session
+					.createQuery("select id from Contact where firstname =:firstname and lastname =:lastname");
+			query.setParameter("firstname", firstname);
+			query.setParameter("lastname", lastname);
+			
+			/* Créer des pages pour la gestion des différents erreurs */
+			if (query.list()==null) {
+				System.out.println("Le contact n'existe pas, entrrez un contact existant");
+				tx.commit();
+				session.close();
+				return null;
+			}
+			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
+			
+			Contact c = (Contact) session.get(Contact.class, id);
+			tx.commit();
+			session.close();
+			return c;
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
+
+	
 	public void addContact(Contact contact) {
-		System.out.println("********************je suis dans addContact********************************************");
+		
+		try {
+			System.out.println("********************je suis dans addContact********************************************");
 
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
-		tx = session.beginTransaction();
-		/*
-		 * Set<PhoneNumber> tels = new HashSet<PhoneNumber>(); PhoneNumber ph1 = new
-		 * PhoneNumber("FR","06757575"); PhoneNumber ph2 = new
-		 * PhoneNumber("FR","07585858");
-		 * 
-		 * tels.add(ph1); tels.add(ph2);
-		 * 
-		 * contact.getTels().add(ph1); contact.getTels().add(ph2);
-		 * 
-		 * ph1.setContact(contact); ph2.setContact(contact);
-		 * 
-		 * ContactGroup group = new ContactGroup(); group.setGroupName("MIAGE");
-		 * group.getContacts().add(contact); contact.getGroups().add(group);
-		 * //System.out.println(tels.toString());
-		 * 
-		 * Address ad = new Address("kk","jj","ll","fr"); contact.setAdresse(ad);
-		 * session.save(ph1); session.save(ph2); session.save(ad); session.save(group);
-		 */
-		session.save(contact);
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
 
-		tx.commit();
+			session.save(contact);
+			tx.commit();
+			
+			session.close();
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 	}
 
+	
 	public void updateContact(Contact contact) {
-		System.out.println("********************je suis dans addContact********************************************");
-
-		session = HibernateUtil.getSessionFactory().getCurrentSession();
-		tx = session.beginTransaction();
-
-		session.update(contact);
-		tx.commit();
+		
+		try {
+			System.out.println("********************je suis dans updateContact********************************************");
+					
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			
+			session.saveOrUpdate(contact);
+			tx.commit();
+			session.close();
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
 	}
 
+	
 	public void deleteContact(String firstname, String lastname) {
 		try {
 			System.out.println(
 					"**************************je suis dans DeleteContact **********************************************************");
 
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
-			Query query = session
-					.createQuery("select id from Contact where firstname =:firstname and lastname =:lastname");
-			query.setParameter("firstname", firstname);
-			query.setParameter("lastname", lastname);
-			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
-
-			Contact c = (Contact) session.get(Contact.class, id);
+			Contact c = getContactFromName(firstname, lastname);
 			session.delete(c);
 			tx.commit();
+			session.close();
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void deleteContactList(Long id) {
 		try {
 			System.out.println(
 					"**************************je suis dans DeleteContact from contact's list **********************************************************");
 
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 			Contact c = (Contact) session.get(Contact.class, id);
 			session.delete(c);
 			tx.commit();
+			session.close();
+			
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
 
+	
 //	Affiche la Liste de tous les contacts
 	public List<Contact> listContact() {
 		try {
@@ -126,7 +172,7 @@ public class ContactDAO {
 
 			System.out.println("\n");
 			System.out.println(String.valueOf(query.list()));
-			return query.list();
+			return (List<Contact>) query.list();
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -134,42 +180,28 @@ public class ContactDAO {
 		}
 	}
 
+	
 	public Contact ReadContact(long id) {
 
 		System.out.println("je suis dans read*****************************************************************");
 		try {
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
 			Query query = session.createQuery("from Contact where id =:id");
 			query.setParameter("id", id);
-
-//			Query query2 = session
-//					.createQuery("from Telephone where id_contact =:id");
-//			query2.setParameter("id", id);
-//			
-//			Query query3 = session
-//					.createQuery("from Address where id_contact =:id");
-//			query3.setParameter("id", ((Contact)query.uniqueResult()).getAdresse());
-//			
+			session.close();
+				
 			return (Contact) query.uniqueResult();
 
 		} catch (Exception e) {
 			System.out.println("Catch2");
-
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public Contact getContact(long idContact) {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
-		Contact c = (Contact) session.get(Contact.class, idContact);
-		return c;
-	}
-
+	
 	public void addPhoneNumber(PhoneNumber tel) {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -179,6 +211,7 @@ public class ContactDAO {
 
 	}
 
+	
 	public void updateAdress(Long idAdress, Address adresse) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 

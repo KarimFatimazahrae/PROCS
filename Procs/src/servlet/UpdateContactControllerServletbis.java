@@ -21,13 +21,12 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String nom = request.getParameter("firstName");
-		String prenom = request.getParameter("lastName");
+		
+		Long id = Long.parseLong(request.getParameter("id"));
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
 		String email = request.getParameter("email");
 		String phone1 = request.getParameter("phone");
-//        String phone2 = null;
-//        if (!request.getParameter("phone_fixe").isEmpty())
-//        	 phone2 = request.getParameter("phone_fixe");
 		String street = request.getParameter("street");
 		String city = request.getParameter("city");
 		String zip = request.getParameter("zip");
@@ -37,32 +36,31 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 		try {
 			ContactDAO userDAO = new ContactDAO();
 			// Creation du contact
-			Contact c = new Contact(prenom, nom, email);
+			//Contact c = new Contact(lastName, firstName, email);
 			// creation de l'adresse
-			Address ad = new Address(street, city, zip, country);
-			c.setAdresse(ad);
+			//Address ad = new Address(street, city, zip, country);
+			//c.setAdresse(ad);
 
 			// Creation du numero telephone
-			PhoneNumber ph = new PhoneNumber("portable", phone1, c);
-			Set<PhoneNumber> tels = new HashSet<PhoneNumber>();
-			tels.add(ph);
-			c.setTels(tels);
+			//PhoneNumber ph = new PhoneNumber("portable", phone1, c);
+			//Set<PhoneNumber> tels = new HashSet<PhoneNumber>();
+			//tels.add(ph);
+			//c.setTels(tels);
 			// Sauvegarde du contact
-			userDAO.updateContact(c);
+			//userDAO.updateContact(c);
+			//response.sendRedirect("Success");
+			
+			Contact ctt = userDAO.getContact(id);
+			ctt.setFirstName(firstName);
+			ctt.setLastName(lastName);
+			ctt.setEmail(email);
+			userDAO.updateContact(ctt);
+			response.sendRedirect("Success");				
 
-//            PhoneNumber ph2;
-//            if(!phone2.isEmpty())
-//            	ph2 = new  PhoneNumber("Fixe",phone1,c);
-
-			response.sendRedirect("Success");
-
-//            ContactDAO.addUserDetails(nom, prenom, email, phone, city);
-//            ContactDAO.sendRedirect("Success");
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
-
 	}
-
 }
+
+
