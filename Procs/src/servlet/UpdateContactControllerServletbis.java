@@ -57,10 +57,8 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 			for(PhoneNumber tel : tels) {
 				tel.setPhoneKind(phoneKind);
 				tel.setPhoneNumber(phone1);
-				
-				
 				tel.setContact(ctt);
-				userDAO.updateTelephone(tel);
+				
 			}
 			ctt.setTels(tels);
 			
