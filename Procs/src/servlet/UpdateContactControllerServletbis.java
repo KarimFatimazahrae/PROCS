@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.ContactDAO;
+import domain.IContactDAO;
 import entities.Contact;
 import entities.PhoneNumber;
 import entities.Address;
@@ -36,7 +37,7 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 		try {
-			ContactDAO userDAO = new ContactDAO();
+			IContactDAO userDAO = new ContactDAO();
 			
 			/* Updating the Contact */		
 			Contact ctt = userDAO.getContact(id);

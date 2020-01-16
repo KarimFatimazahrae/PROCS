@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.ContactDAO;
+import domain.IContactDAO;
 import entities.Contact;
 import entities.PhoneNumber;
 import entities.Address;
@@ -25,7 +26,7 @@ public class ListContactControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		try {
-			ContactDAO userDAO = new ContactDAO();
+			IContactDAO userDAO = new ContactDAO();
 			// Recuperer la liste des contacts
 			
 			if((request.getParameter("id"))==null) {

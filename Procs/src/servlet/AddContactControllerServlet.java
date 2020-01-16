@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.ContactDAO;
+import domain.IContactDAO;
 import entities.Contact;
 import entities.PhoneNumber;
 import entities.Address;
@@ -35,7 +39,10 @@ public class AddContactControllerServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 		try {
-			ContactDAO userDAO = new ContactDAO();
+			//IContactDAO userDAO = new ContactDAO();
+			
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactDAO iContactDao = (IContactDAO)context.getBean("idContactDAO");
 			// Creation du contact
 			Contact c = new Contact(prenom, nom, email);
 			// creation de l'adresse
@@ -48,16 +55,17 @@ public class AddContactControllerServlet extends HttpServlet {
 			tels.add(ph);
 			c.setTels(tels);
 			// Sauvegarde du contact
-			userDAO.addContact(c);
+			//userDAO.addContact(c);
+			iContactDao.addContact(c);
 
 //            PhoneNumber ph2;
 //            if(!phone2.isEmpty())
 //            	ph2 = new  PhoneNumber("Fixe",phone1,c);
+			
+			
 
 			response.sendRedirect("Success");
-
-//            ContactDAO.addUserDetails(nom, prenom, email, phone, city);
-//            ContactDAO.sendRedirect("Success");
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();

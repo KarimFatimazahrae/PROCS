@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.ContactDAO;
+import domain.IContactDAO;
 import entities.Contact;
 
 public class ReadContactControllerServlet extends HttpServlet {
@@ -27,7 +28,7 @@ public class ReadContactControllerServlet extends HttpServlet {
  
         HttpSession session = request.getSession(true);
         try {
-            ContactDAO userDAO = new ContactDAO();
+            IContactDAO userDAO = new ContactDAO();
             Contact c= new Contact(nom,prenom,email);
             userDAO.addContact(c);
             response.sendRedirect("Success");

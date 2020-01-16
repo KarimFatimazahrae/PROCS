@@ -18,7 +18,7 @@ import entities.Entreprise;
 import entities.PhoneNumber;
 import util.HibernateUtil;
 
-public class ContactDAO {
+public class ContactDAO implements IContactDAO {
 
 	public ContactDAO() {
 
@@ -28,7 +28,8 @@ public class ContactDAO {
 	static Session session = null;
 	static Transaction tx = null;
 
-	/* ******************    CRUD Groupe     ******************  */
+	/* ****************** CRUD Groupe ****************** */
+	@Override
 	public ContactGroup getGroupe(long idGroupe) {
 		session = HibernateUtil.getSessionFactory().openSession();
 		tx = session.beginTransaction();
@@ -36,12 +37,92 @@ public class ContactDAO {
 		ContactGroup g = (ContactGroup) session.get(ContactGroup.class, idGroupe);
 		tx.commit();
 		session.close();
-		
+
 		return g;
 	}
 
+	@Override
+	public void addGroup(ContactGroup group) {
+
+		try {
+			System.out
+					.println("********************je suis dans addGroup********************************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			session.save(group);
+			tx.commit();
+
+			session.close();
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
-	/*  ******************    CRUD Contact      ******************   */   
+	@Override
+	public ContactGroup getGroupFromName(String groupName) {
+		
+
+		try {
+			
+			System.out.println(
+					"**************************   je suis dans getGroupFromName  ************************************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			System.out.println("voici les prenoms et noms: " + groupName );
+			Query query = session
+					.createQuery("select id from ContactGoup where groupname =:groupName");
+			query.setParameter("groupname", groupName);
+			
+
+			/* Créer des pages pour la gestion des différents erreurs */
+			if (query.list() == null) {
+				System.out.println("Le groupe n'existe pas, entrrez un groupe existant");
+				tx.commit();
+				session.close();
+				return null;
+			}
+			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
+
+			ContactGroup g = (ContactGroup) session.get(ContactGroup.class, id);
+			tx.commit();
+			session.close();
+
+			return g;
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void deleteGroupe(String groupName) {
+		try {
+			System.out.println(
+					"**************************   je suis dans DeleteContact   ************************************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			ContactGroup g = getGroupFromName(groupName);
+			
+			session.delete(g);
+			tx.commit();
+			session.close();
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/* ****************** CRUD Contact ****************** */
+	@Override
 	public Contact getContact(long idContact) {
 		session = HibernateUtil.getSessionFactory().openSession();
 		tx = session.beginTransaction();
@@ -49,101 +130,103 @@ public class ContactDAO {
 		Contact c = (Contact) session.get(Contact.class, idContact);
 		tx.commit();
 		session.close();
-		
-		return c;	
+
+		return c;
 	}
 
-
+	@Override
 	public Contact getContactFromName(String firstname, String lastname) {
-		
+
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
-			
-			
+
 			System.out.println("voici les prenoms et noms: " + firstname + "   " + lastname);
 			Query query = session
 					.createQuery("select id from Contact where firstname =:firstname and lastname =:lastname");
 			query.setParameter("firstname", firstname);
 			query.setParameter("lastname", lastname);
-			
+
 			/* Créer des pages pour la gestion des différents erreurs */
-			if (query.list()==null) {
+			if (query.list() == null) {
 				System.out.println("Le contact n'existe pas, entrrez un contact existant");
 				tx.commit();
 				session.close();
 				return null;
 			}
 			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
-			
+
 			Contact c = (Contact) session.get(Contact.class, id);
 			tx.commit();
 			session.close();
-			
+
 			return c;
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			return null;
-		}		
+		}
 	}
 
-	
+	@Override
 	public void addContact(Contact contact) {
-		
+
 		try {
-			System.out.println("********************je suis dans addContact********************************************");
+			System.out
+					.println("********************je suis dans addContact********************************************");
 
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
 			session.save(contact);
 			tx.commit();
-			
+
 			session.close();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
+	@Override
 	public void updateContact(Contact contact) {
-		
+
 		try {
-			System.out.println("********************  je suis dans updateContact  ********************************************");
-					
+			System.out.println(
+					"********************  je suis dans updateContact  ********************************************");
+
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
-			
+
 			session.saveOrUpdate(contact);
 			tx.commit();
 			session.close();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
 	public void updateTelephone(PhoneNumber phone1) {
-		
+
 		try {
-			System.out.println("********************  je suis dans updatePhone  ********************************************");
-					
+			System.out.println(
+					"********************  je suis dans updatePhone  ********************************************");
+
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
-			
-			
+
 			session.saveOrUpdate(phone1);
 			tx.commit();
 			session.close();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
-	
+	@Override
 	public void deleteContact(String firstname, String lastname) {
 		try {
 			System.out.println(
@@ -156,13 +239,13 @@ public class ContactDAO {
 			session.delete(c);
 			tx.commit();
 			session.close();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
+	@Override
 	public void deleteContactList(Long id) {
 		try {
 			System.out.println(
@@ -174,14 +257,14 @@ public class ContactDAO {
 			session.delete(c);
 			tx.commit();
 			session.close();
-			
+
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
 //	Affiche la Liste de tous les contacts
+	@Override
 	public List<Contact> listContact() {
 		try {
 			System.out.println(
@@ -194,11 +277,11 @@ public class ContactDAO {
 
 			System.out.println("\n");
 			System.out.println(String.valueOf(query.list()));
-			
+
 			List<Contact> lc = (List<Contact>) query.list();
 			tx.commit();
 			session.close();
-			
+
 			return lc;
 
 		} catch (HibernateException e) {
@@ -207,7 +290,7 @@ public class ContactDAO {
 		}
 	}
 
-	
+	@Override
 	public Contact ReadContact(long id) {
 
 		System.out.println("******************  je suis dans read   **********************");
@@ -217,11 +300,11 @@ public class ContactDAO {
 
 			Query query = session.createQuery("from Contact where id =:id");
 			query.setParameter("id", id);
-			
+
 			Contact c = (Contact) query.uniqueResult();
 			tx.commit();
 			session.close();
-			
+
 			return c;
 
 		} catch (Exception e) {
@@ -231,7 +314,7 @@ public class ContactDAO {
 		}
 	}
 
-	
+	@Override
 	public void addPhoneNumber(PhoneNumber tel) {
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -241,7 +324,7 @@ public class ContactDAO {
 
 	}
 
-	
+	@Override
 	public void updateAdress(Long idAdress, Address adresse) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -256,6 +339,4 @@ public class ContactDAO {
 		session.getTransaction().commit();
 	}
 
-
-	
 }

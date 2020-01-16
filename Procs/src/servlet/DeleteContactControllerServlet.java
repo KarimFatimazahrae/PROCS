@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import domain.ContactDAO;
+import domain.IContactDAO;
 import entities.Contact;
 
 public class DeleteContactControllerServlet extends HttpServlet {
@@ -23,7 +24,7 @@ public class DeleteContactControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		try {
-			ContactDAO userDAO = new ContactDAO();
+			IContactDAO userDAO = new ContactDAO();
 			userDAO.deleteContact(prenom,nom);
 			response.sendRedirect("Success");
 

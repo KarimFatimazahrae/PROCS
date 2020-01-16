@@ -18,5 +18,12 @@
     <p />
         <input type="submit" value="Afficher" />
     </form>
+    
+    <!--Groupe  -->
+    <h1>Ajouter un Groupe</h1>
+    <button onclick="window.location.href = 'pages/ajouterGroupe.jsp';">Ajouter Groupe</button>
+    
+    <h1>Supprimer un Groupe</h1>
+    <button onclick="window.location.href = 'pages/supprimerGroupe.jsp';">Supprimer Groupe</button>
 </body>
 </html>

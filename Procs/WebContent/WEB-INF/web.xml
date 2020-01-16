@@ -1,81 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  	
-    <!--Servlet Creation  -->
- 	<servlet>
-        <display-name>ajouterContact</display-name>
-        <servlet-name>ajouterContact</servlet-name>
-        <servlet-class>servlet.AddContactControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>modifierContact2</display-name>
-        <servlet-name>modifierContact2</servlet-name>
-        <servlet-class>servlet.UpdateContactControllerServletbis</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>supprimerContactFromList</display-name>
-        <servlet-name>supprimerContactFromList</servlet-name>
-        <servlet-class>servlet.DeleteContactListControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>supprimerContact</display-name>
-        <servlet-name>supprimerContact</servlet-name>
-        <servlet-class>servlet.DeleteContactControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>listContact</display-name>
-        <servlet-name>listContact</servlet-name>
-        <servlet-class>servlet.ListContactControllerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <display-name>modifierContact</display-name>
-        <servlet-name>modifierContact</servlet-name>
-        <servlet-class>servlet.UpdateContactControllerServlet</servlet-class>
-    </servlet>
-    
-    <servlet>
-        <display-name>Success</display-name>
-        <servlet-name>Success</servlet-name>
-        <servlet-class>servlet.Success</servlet-class>
-    </servlet>
-    
-    <!--Servlet mapping  -->
-    <servlet-mapping>
-        <servlet-name>ajouterContact</servlet-name>
-        <url-pattern>/ajouterContact</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>modifierContact</servlet-name>
-        <url-pattern>/modifierContact</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>modifierContact2</servlet-name>
-        <url-pattern>/modifierContact2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>supprimerContactFromList</servlet-name>
-        <url-pattern>/supprimerContactFromList</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>supprimerContact</servlet-name>
-        <url-pattern>/supprimerContact</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>listContact</servlet-name>
-        <url-pattern>/listContact</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>Success</servlet-name>
-        <url-pattern>/Success</url-pattern>
-    </servlet-mapping>
-    
-    <welcome-file-list>
-        <welcome-file>pages/acceuil.jsp</welcome-file>
-    </welcome-file-list>
-    
-<!--     <welcome-file-list>
-        <welcome-file>pages/ajouterContact.jsp</welcome-file>
-    </welcome-file-list>
-   -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<!--Servlet Creation -->
+	<servlet>
+		<display-name>ajouterContact</display-name>
+		<servlet-name>ajouterContact</servlet-name>
+		<servlet-class>servlet.AddContactControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>modifierContact2</display-name>
+		<servlet-name>modifierContact2</servlet-name>
+		<servlet-class>servlet.UpdateContactControllerServletbis</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>supprimerContactFromList</display-name>
+		<servlet-name>supprimerContactFromList</servlet-name>
+		<servlet-class>servlet.DeleteContactListControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>supprimerContact</display-name>
+		<servlet-name>supprimerContact</servlet-name>
+		<servlet-class>servlet.DeleteContactControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>listContact</display-name>
+		<servlet-name>listContact</servlet-name>
+		<servlet-class>servlet.ListContactControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>modifierContact</display-name>
+		<servlet-name>modifierContact</servlet-name>
+		<servlet-class>servlet.UpdateContactControllerServlet</servlet-class>
+	</servlet>
+
+	<!--Groupe -->
+	<servlet>
+		<display-name>ajouterGroupe</display-name>
+		<servlet-name>ajouterGroupe</servlet-name>
+		<servlet-class>servlet.AddGroupeControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>supprimerGroupe</display-name>
+		<servlet-name>supprimerGroupe</servlet-name>
+		<servlet-class>servlet.DeleteGroupControllerServlet</servlet-class>
+	</servlet>
+
+
+	<servlet>
+		<display-name>Success</display-name>
+		<servlet-name>Success</servlet-name>
+		<servlet-class>servlet.Success</servlet-class>
+	</servlet>
+
+	<!-- 2) the second way is to use the lines below. Here you don't give explicitly the file name but it is supposed to be 
+    named applicationContext.xml -->
+    <listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!-- In the above declations the beans will be scoped in the servlet context, using the 
+	listner given bellow your beans can request-scoped or session-scoped -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+
+	<!--Servlet mapping -->
+	<servlet-mapping>
+		<servlet-name>ajouterContact</servlet-name>
+		<url-pattern>/ajouterContact</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>modifierContact</servlet-name>
+		<url-pattern>/modifierContact</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>modifierContact2</servlet-name>
+		<url-pattern>/modifierContact2</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>supprimerContactFromList</servlet-name>
+		<url-pattern>/supprimerContactFromList</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>supprimerContact</servlet-name>
+		<url-pattern>/supprimerContact</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>listContact</servlet-name>
+		<url-pattern>/listContact</url-pattern>
+	</servlet-mapping>
+
+	<!-- Goupe -->
+	<servlet-mapping>
+		<servlet-name>ajouterGroupe</servlet-name>
+		<url-pattern>/ajouterGroupe</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>supprimerGroupe</servlet-name>
+		<url-pattern>/supprimerGroupe</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Success</servlet-name>
+		<url-pattern>/Success</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>pages/acceuil.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- <welcome-file-list> <welcome-file>pages/ajouterContact.jsp</welcome-file> 
+		</welcome-file-list> -->
 </web-app>

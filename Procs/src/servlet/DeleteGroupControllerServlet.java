@@ -12,23 +12,21 @@ import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
 
-public class DeleteContactListControllerServlet extends HttpServlet {
+public class DeleteGroupControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("################################## I am in the delete contact from list #############################");
-		Long id = Long.parseLong(request.getParameter("id").toString());	
+		System.out.println("################################## I am in the delete Group #############################");
+		String groupName = request.getParameter("groupName");
 		
 		HttpSession session = request.getSession(true);
 		try {
 			IContactDAO userDAO = new ContactDAO();
-			userDAO.deleteContactList(id);
+			userDAO.deleteGroupe(groupName);
 			response.sendRedirect("Success");
 
-			//            ContactDAO.addUserDetails(nom, prenom, email, phone, city);
-			//            ContactDAO.sendRedirect("Success");
 		} catch (Exception e) {
 
 			e.printStackTrace();

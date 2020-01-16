@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -15,28 +14,32 @@ import javax.servlet.http.HttpSession;
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
+import entities.ContactGroup;
 import entities.PhoneNumber;
 import entities.Address;
 
-public class UpdateContactControllerServlet extends HttpServlet {
+public class AddGroupeControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		String groupName = request.getParameter("groupName");
+
 		HttpSession session = request.getSession(true);
 		try {
-				IContactDAO userDAO = new ContactDAO();
-			// Recuperer le contact à modifier
-			
-				Long id = Long.parseLong(request.getParameter("id").toString());
-				Contact cd = userDAO.ReadContact(id);
-				
-				request.setAttribute("Contact", cd);  
-				getServletConfig().getServletContext().getRequestDispatcher("/pages/modifierContact.jsp").forward(request,response);
-			} catch (Exception e) {
+			IContactDAO userDAO = new ContactDAO();
+			// Creation du groupe
+			ContactGroup g = new ContactGroup(groupName);
+
+			// Sauvegarde du contact
+			userDAO.addGroup(g);
+
+			response.sendRedirect("Success");
+		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
+
 	}
 
 }
