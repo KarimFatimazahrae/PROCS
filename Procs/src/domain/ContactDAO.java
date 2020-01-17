@@ -63,37 +63,38 @@ public class ContactDAO implements IContactDAO {
 
 	
 	@Override
-	public ContactGroup getGroupFromName(String groupName) {
+	public ContactGroup getGroupFromName(String groupname) {
 		
 
 		try {
-			
+		
 			System.out.println(
 					"**************************   je suis dans getGroupFromName  ************************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+			Session session = HibernateUtil.getSessionFactory().openSession();			
+			session.getTransaction().begin();
 
-			System.out.println("voici les prenoms et noms: " + groupName );
+			System.out.println("voici le nom du groupe: " + groupname );
 			Query query = session
-					.createQuery("select id from ContactGoup where groupname =:groupName");
-			query.setParameter("groupname", groupName);
+					.createQuery("select groupId from ContactGroup where groupName =:groupname");
+			query.setParameter("groupname", groupname);
 			
-
 			/* Créer des pages pour la gestion des différents erreurs */
 			if (query.list() == null) {
-				System.out.println("Le groupe n'existe pas, entrrez un groupe existant");
+				System.out.println("Le groupe n'existe pas, entrez un groupe existant");
 				tx.commit();
-				session.close();
+				//session.close();
 				return null;
 			}
 			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
+			System.out.println("voici le id du groupe: " + id );
 
 			ContactGroup g = (ContactGroup) session.get(ContactGroup.class, id);
-			tx.commit();
+			session.getTransaction().commit();
 			session.close();
-
+			
 			return g;
+			
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -102,18 +103,20 @@ public class ContactDAO implements IContactDAO {
 	}
 
 	@Override
-	public void deleteGroupe(String groupName) {
+	public void deleteGroupe(String groupname) {
 		try {
 			System.out.println(
-					"**************************   je suis dans DeleteContact   ************************************************");
+					"**************************   je suis dans Delete Groupe  ************************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();			
+			session.getTransaction().begin();
 
-			ContactGroup g = getGroupFromName(groupName);
-			
+			ContactGroup g = getGroupFromName(groupname);
+			System.out.println("voici le nom du groupe dans la methode delete: " + g.getGroupName() );
+
 			session.delete(g);
-			tx.commit();
+			System.out.println("*************************apres delete****************************** " );
+			session.getTransaction().commit();
 			session.close();
 
 		} catch (HibernateException e) {

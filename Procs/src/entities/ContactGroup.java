@@ -47,11 +47,10 @@ public class ContactGroup {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((contacts == null) ? 0 : contacts.hashCode());
+		result = prime * result + ((groupName == null) ? 0 : groupName.hashCode());
 		return result;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -61,12 +60,14 @@ public class ContactGroup {
 		if (getClass() != obj.getClass())
 			return false;
 		ContactGroup other = (ContactGroup) obj;
-		if (contacts == null) {
-			if (other.contacts != null)
+		if (groupName == null) {
+			if (other.groupName != null)
 				return false;
-		} else if (!contacts.equals(other.contacts))
+		} else if (!groupName.equals(other.groupName))
 			return false;
 		return true;
-	} 
+	}
+
+	
 
 }

@@ -19,12 +19,12 @@ public class DeleteGroupControllerServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("################################## I am in the delete Group #############################");
-		String groupName = request.getParameter("groupName");
+		String groupname = request.getParameter("groupname");
 		
 		HttpSession session = request.getSession(true);
 		try {
 			IContactDAO userDAO = new ContactDAO();
-			userDAO.deleteGroupe(groupName);
+			userDAO.deleteGroupe(groupname);
 			response.sendRedirect("Success");
 
 		} catch (Exception e) {
