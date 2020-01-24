@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,10 @@ public class ContactDAO implements IContactDAO {
 	static Session session = null;
 	static Transaction tx = null;
 
-	/* ****************** CRUD Groupe ****************** */
+	/*
+	 * *********************************** CRUD Groupe
+	 * ********************************************
+	 */
 	@Override
 	public ContactGroup getGroupe(long idGroupe) {
 		session = HibernateUtil.getSessionFactory().openSession();
@@ -45,8 +49,7 @@ public class ContactDAO implements IContactDAO {
 	public void addGroup(ContactGroup group) {
 
 		try {
-			System.out
-					.println("********************je suis dans addGroup********************************************");
+			System.out.println("********************je suis dans addGroup********************************************");
 
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
@@ -61,40 +64,36 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
-	
 	@Override
 	public ContactGroup getGroupFromName(String groupname) {
-		
 
 		try {
-		
+
 			System.out.println(
 					"**************************   je suis dans getGroupFromName  ************************************************");
 
-			Session session = HibernateUtil.getSessionFactory().openSession();			
+			Session session = HibernateUtil.getSessionFactory().openSession();
 			session.getTransaction().begin();
 
-			System.out.println("voici le nom du groupe: " + groupname );
-			Query query = session
-					.createQuery("select groupId from ContactGroup where groupName =:groupname");
+			System.out.println("voici le nom du groupe: " + groupname);
+			Query query = session.createQuery("select groupId from ContactGroup where groupName =:groupname");
 			query.setParameter("groupname", groupname);
-			
+
 			/* Créer des pages pour la gestion des différents erreurs */
 			if (query.list() == null) {
 				System.out.println("Le groupe n'existe pas, entrez un groupe existant");
 				tx.commit();
-				//session.close();
+				// session.close();
 				return null;
 			}
 			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
-			System.out.println("voici le id du groupe: " + id );
+			System.out.println("voici le id du groupe: " + id);
 
 			ContactGroup g = (ContactGroup) session.get(ContactGroup.class, id);
 			session.getTransaction().commit();
 			session.close();
-			
+
 			return g;
-			
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -108,14 +107,14 @@ public class ContactDAO implements IContactDAO {
 			System.out.println(
 					"**************************   je suis dans Delete Groupe  ************************************************");
 
-			Session session = HibernateUtil.getSessionFactory().getCurrentSession();			
+			Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.getTransaction().begin();
 
 			ContactGroup g = getGroupFromName(groupname);
-			System.out.println("voici le nom du groupe dans la methode delete: " + g.getGroupName() );
+			System.out.println("voici le nom du groupe dans la methode delete: " + g.getGroupName());
 
 			session.delete(g);
-			System.out.println("*************************apres delete****************************** " );
+			System.out.println("*************************apres delete****************************** ");
 			session.getTransaction().commit();
 			session.close();
 
@@ -124,7 +123,68 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
-	/* ****************** CRUD Contact ****************** */
+	@Override
+	public List<ContactGroup> listGroups() {
+		System.out.println("**********afficher group 1***************************");
+		List<ContactGroup> gList = new ArrayList();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Query query = session.createQuery("From ContactGroup");
+		System.out.println("\n");
+		System.out.println(String.valueOf(query.list()));
+
+		gList = query.list();
+		return gList;
+	}
+
+//	Affiche la Liste de tous les groupes
+	@Override
+	public List<ContactGroup> listGroupe() {
+		try {
+			System.out.println(
+					"*************************  je suis dans Liste des groupes    *********************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			Query query = session.createQuery("from ContactGroup");
+
+			System.out.println("\n");
+			System.out.println("******************list de groupes:" + String.valueOf(query.list()));
+
+			List<ContactGroup> lg = (List<ContactGroup>) query.list();
+			tx.commit();
+			session.close();
+
+			return lg;
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	//	Supprimer groupe dans la liste
+	@Override
+	public void deleteGroupList(Long id) {
+		try {
+			System.out.println(
+					"********************   je suis dans DeleteGroup from group's list   **********************************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			ContactGroup g = (ContactGroup) session.get(ContactGroup.class, id);
+			session.delete(g);
+			tx.commit();
+			session.close();
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * *********************************** CRUD Contact
+	 * *******************************************************
+	 */
 	@Override
 	public Contact getContact(long idContact) {
 		session = HibernateUtil.getSessionFactory().openSession();
@@ -279,7 +339,7 @@ public class ContactDAO implements IContactDAO {
 			Query query = session.createQuery("from Contact");
 
 			System.out.println("\n");
-			System.out.println(String.valueOf(query.list()));
+			System.out.println("liste des contacts: " + String.valueOf(query.list()));
 
 			List<Contact> lc = (List<Contact>) query.list();
 			tx.commit();

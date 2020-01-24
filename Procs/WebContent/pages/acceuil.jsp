@@ -25,5 +25,18 @@
     
     <h1>Supprimer un Groupe</h1>
     <button onclick="window.location.href = 'pages/supprimerGroupe.jsp';">Supprimer Groupe</button>
+    
+<%--     <h1>Liste de tous les groupes</h1>
+    <form action="${pageContext.request.contextPath}/AfficherGroupe" method="post">
+    <p />
+        <input type="submit" value="Afficher" />
+    </form>
+ --%>    
+    <h1>Liste de tous les Groupes</h1>
+    <form action="${pageContext.request.contextPath}/listGroup" method="post">
+    <p />
+        <input type="submit" value="Afficher Groupes" />
+    </form>
+    
 </body>
 </html>

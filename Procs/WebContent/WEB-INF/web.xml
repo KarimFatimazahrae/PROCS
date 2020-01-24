@@ -48,6 +48,16 @@
 		<servlet-class>servlet.DeleteGroupControllerServlet</servlet-class>
 	</servlet>
 
+	<servlet>
+		<display-name>listGroup</display-name>
+		<servlet-name>listGroup</servlet-name>
+		<servlet-class>servlet.ListGroupControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>supprimerGroupFromList</display-name>
+		<servlet-name>supprimerGroupFromList</servlet-name>
+		<servlet-class>servlet.DeleteGroupListControllerServlet</servlet-class>
+	</servlet>
 
 	<servlet>
 		<display-name>Success</display-name>
@@ -105,6 +115,14 @@
 	<servlet-mapping>
 		<servlet-name>supprimerGroupe</servlet-name>
 		<url-pattern>/supprimerGroupe</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>listGroup</servlet-name>
+		<url-pattern>/listGroup</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>supprimerGroupFromList</servlet-name>
+		<url-pattern>/supprimerGroupFromList</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>
