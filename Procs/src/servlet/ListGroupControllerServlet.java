@@ -27,11 +27,19 @@ public class ListGroupControllerServlet extends HttpServlet {
 			IContactDAO userDAO = new ContactDAO();
 			// Recuperer la liste des contacts
 			
-		
+			if((request.getParameter("id"))==null) {
 				List<ContactGroup> categoryList = userDAO.listGroupe();
 				request.setAttribute("listGroup", categoryList);  
 				getServletConfig().getServletContext().getRequestDispatcher("/pages/listGroup.jsp").forward(request,response);
 				System.out.println("******************request:" + String.valueOf(request));
+				
+			} else {
+			Long id = Long.parseLong(request.getParameter("id").toString());
+			ContactGroup cd = userDAO.ReadGroup(id);
+			
+			request.setAttribute("ContactGroup", cd);  
+			getServletConfig().getServletContext().getRequestDispatcher("/pages/afficherGroup.jsp").forward(request,response);
+		}
 
 		} catch (Exception e) {
 

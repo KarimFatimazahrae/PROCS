@@ -31,6 +31,13 @@
 			<td><%=g.getGroupId()%></td>
 			<td><%=g.getGroupName()%></td>
 			<td><form
+					action="${pageContext.request.contextPath}/listGroup"
+					method="post">
+					<p />
+					<input type="hidden" name="id" value="<%=g.getGroupId()%>" />
+					<input type="submit" value="Afficher Groupe" />
+				</form></td>
+			<td><form
 					action="${pageContext.request.contextPath}/supprimerGroupFromList" method="post">
 					<p />
 					<input type="hidden" name="id" value="<%=g.getGroupId()%>" />

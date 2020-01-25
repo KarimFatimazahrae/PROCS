@@ -48,4 +48,6 @@ public interface IContactDAO {
 
 	void deleteGroupList(Long id);
 
+	ContactGroup ReadGroup(long id);
+
 }

@@ -162,7 +162,8 @@ public class ContactDAO implements IContactDAO {
 			return null;
 		}
 	}
-	//	Supprimer groupe dans la liste
+
+	// Supprimer groupe dans la liste
 	@Override
 	public void deleteGroupList(Long id) {
 		try {
@@ -181,9 +182,32 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
+	@Override
+	public ContactGroup ReadGroup(long id) {
+
+		System.out.println("******************  je suis dans read group  **********************");
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			Query query = session.createQuery("from ContactGroup where id =:id");
+			query.setParameter("id", id);
+
+			ContactGroup g = (ContactGroup) query.uniqueResult();
+			tx.commit();
+			session.close();
+
+			return g;
+
+		} catch (Exception e) {
+			System.out.println("Erreur lors de la lecture du groupe");
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	/*
-	 * *********************************** CRUD Contact
-	 * *******************************************************
+	 * *********************************** CRUD Contact*********************************
 	 */
 	@Override
 	public Contact getContact(long idContact) {
