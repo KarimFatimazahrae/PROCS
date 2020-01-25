@@ -114,26 +114,12 @@ public class ContactDAO implements IContactDAO {
 			System.out.println("voici le nom du groupe dans la methode delete: " + g.getGroupName());
 
 			session.delete(g);
-			System.out.println("*************************apres delete****************************** ");
 			session.getTransaction().commit();
 			session.close();
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public List<ContactGroup> listGroups() {
-		System.out.println("**********afficher group 1***************************");
-		List<ContactGroup> gList = new ArrayList();
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Query query = session.createQuery("From ContactGroup");
-		System.out.println("\n");
-		System.out.println(String.valueOf(query.list()));
-
-		gList = query.list();
-		return gList;
 	}
 
 //	Affiche la Liste de tous les groupes
@@ -203,6 +189,25 @@ public class ContactDAO implements IContactDAO {
 			System.out.println("Erreur lors de la lecture du groupe");
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	@Override
+	public void updateGroup(ContactGroup groupe) {
+
+		try {
+			System.out.println(
+					"********************  je suis dans updateGroup ********************************************");
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+
+			session.saveOrUpdate(groupe);
+			tx.commit();
+			session.close();
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
 		}
 	}
 

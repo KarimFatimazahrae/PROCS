@@ -42,12 +42,12 @@ public interface IContactDAO {
 
 	void updateAdress(Long idAdress, Address adresse);
 
-	List<ContactGroup> listGroups();
-
 	List<ContactGroup> listGroupe();
 
 	void deleteGroupList(Long id);
 
 	ContactGroup ReadGroup(long id);
+
+	void updateGroup(ContactGroup groupe);
 
 }
