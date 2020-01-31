@@ -4,7 +4,7 @@ public class PhoneNumber {
 	private long phoneId;
 	private String phoneKind;
 	private String phoneNumber;
-	private Contact contact;
+	private IContact contact;
 
 	public PhoneNumber() {
 		// TODO Auto-generated constructor stub
@@ -17,7 +17,7 @@ public class PhoneNumber {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public PhoneNumber( String phoneKind, String phoneNumber,Contact contact) {
+	public PhoneNumber( String phoneKind, String phoneNumber,IContact contact) {
 		super();
 		this.phoneKind = phoneKind;
 		this.phoneNumber = phoneNumber;
@@ -48,10 +48,10 @@ public class PhoneNumber {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Contact getContact() {
+	public IContact getContact() {
 		return contact;
 	}
-	public void setContact(Contact contact) {
+	public void setContact(IContact contact) {
 		this.contact = contact;
 	}
 

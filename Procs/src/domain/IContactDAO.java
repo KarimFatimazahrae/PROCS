@@ -5,6 +5,7 @@ import java.util.List;
 import entities.Address;
 import entities.Contact;
 import entities.ContactGroup;
+import entities.IContact;
 import entities.PhoneNumber;
 
 public interface IContactDAO {
@@ -21,11 +22,11 @@ public interface IContactDAO {
 	/* ****************** CRUD Contact ****************** */
 	Contact getContact(long idContact);
 
-	Contact getContactFromName(String firstname, String lastname);
+	IContact getContactFromName(String firstname, String lastname);
 
-	void addContact(Contact contact);
+	void addContact(IContact contact);
 
-	void updateContact(Contact contact);
+	void updateContact(IContact contact);
 
 	void updateTelephone(PhoneNumber phone1);
 
@@ -36,7 +37,7 @@ public interface IContactDAO {
 	//	Affiche la Liste de tous les contacts
 	List<Contact> listContact();
 
-	Contact ReadContact(long id);
+	IContact ReadContact(long id);
 
 	void addPhoneNumber(PhoneNumber tel);
 
@@ -49,5 +50,7 @@ public interface IContactDAO {
 	ContactGroup ReadGroup(long id);
 
 	void updateGroup(ContactGroup groupe);
+
+	void addContactPeupler(IContact contact);
 
 }

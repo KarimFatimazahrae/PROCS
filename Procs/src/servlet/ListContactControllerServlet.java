@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
+import entities.IContact;
 import entities.PhoneNumber;
 import entities.Address;
 
@@ -36,7 +37,7 @@ public class ListContactControllerServlet extends HttpServlet {
 				
 			} else {
 				Long id = Long.parseLong(request.getParameter("id").toString());
-				Contact cd = userDAO.ReadContact(id);
+				IContact cd = userDAO.ReadContact(id);
 				
 				request.setAttribute("Contact", cd);  
 				getServletConfig().getServletContext().getRequestDispatcher("/pages/afficherContact.jsp").forward(request,response);

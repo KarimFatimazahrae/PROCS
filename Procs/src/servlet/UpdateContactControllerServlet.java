@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import domain.ContactDAO;
 import domain.IContactDAO;
-import entities.Contact;
 import entities.PhoneNumber;
 import entities.Address;
+import entities.IContact;
 
 public class UpdateContactControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +30,7 @@ public class UpdateContactControllerServlet extends HttpServlet {
 			// Recuperer le contact à modifier
 			
 				Long id = Long.parseLong(request.getParameter("id").toString());
-				Contact cd = userDAO.ReadContact(id);
+				IContact cd = userDAO.ReadContact(id);
 				
 				request.setAttribute("Contact", cd);  
 				getServletConfig().getServletContext().getRequestDispatcher("/pages/modifierContact.jsp").forward(request,response);

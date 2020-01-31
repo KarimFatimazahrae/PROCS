@@ -11,6 +11,11 @@
 		<servlet-class>servlet.AddContactControllerServlet</servlet-class>
 	</servlet>
 	<servlet>
+		<display-name>peuplerContact</display-name>
+		<servlet-name>peuplerContact</servlet-name>
+		<servlet-class>servlet.AddContactPeuplerControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
 		<display-name>supprimerContactFromList</display-name>
 		<servlet-name>supprimerContactFromList</servlet-name>
 		<servlet-class>servlet.DeleteContactListControllerServlet</servlet-class>
@@ -95,6 +100,10 @@
 	<servlet-mapping>
 		<servlet-name>ajouterContact</servlet-name>
 		<url-pattern>/ajouterContact</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>peuplerContact</servlet-name>
+		<url-pattern>/peuplerContact</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>modifierContact</servlet-name>

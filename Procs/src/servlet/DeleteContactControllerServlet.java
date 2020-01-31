@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
@@ -24,8 +27,10 @@ public class DeleteContactControllerServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		try {
-			IContactDAO userDAO = new ContactDAO();
-			userDAO.deleteContact(prenom,nom);
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactDAO iContactDao = (IContactDAO)context.getBean("idContactDAO");
+			//IContactDAO userDAO = new ContactDAO();
+			iContactDao.deleteContact(prenom,nom);
 			response.sendRedirect("Success");
 
 			//            ContactDAO.addUserDetails(nom, prenom, email, phone, city);

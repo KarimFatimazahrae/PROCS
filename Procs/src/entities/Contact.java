@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 
-public class Contact {
+public class Contact implements IContact {
 	
 	private long id;
 	private String firstName;
@@ -28,7 +28,7 @@ public class Contact {
 		super();
 	}
 
-	public Contact(Contact uniqueResult) {
+	public Contact(IContact uniqueResult) {
 		super();
 	}
 
@@ -57,7 +57,7 @@ public class Contact {
 		this.tels = tels;
 	}
 	
-	public String getType(Contact c){
+	public String getType(IContact c){
 		if(c instanceof Contact)
 			return "Contact";
 		else

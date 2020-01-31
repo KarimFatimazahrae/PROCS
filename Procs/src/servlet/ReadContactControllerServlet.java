@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
+import entities.IContact;
 
 public class ReadContactControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +30,7 @@ public class ReadContactControllerServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         try {
             IContactDAO userDAO = new ContactDAO();
-            Contact c= new Contact(nom,prenom,email);
+            IContact c= new Contact(nom,prenom,email);
             userDAO.addContact(c);
             response.sendRedirect("Success");
             

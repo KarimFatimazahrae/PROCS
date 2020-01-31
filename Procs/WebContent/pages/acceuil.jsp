@@ -10,6 +10,12 @@
     <h1>Ajouter un Contact</h1>
     <button onclick="window.location.href = 'pages/ajouterContact.jsp';">Ajouter Contact</button>
     
+    <h1>Ajouter contact avec Spring</h1>
+    <form action="${pageContext.request.contextPath}/peuplerContact" method="post">
+    <p />
+        <input type="submit" value="peupler" />
+    </form>
+    
     <h1>Supprimer un Contact</h1>
     <button onclick="window.location.href = 'pages/supprimerContact.jsp';">Supprimer Contact</button>
     

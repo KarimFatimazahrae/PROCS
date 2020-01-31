@@ -8,6 +8,7 @@ import java.util.Set;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -16,10 +17,25 @@ import entities.Address;
 import entities.Contact;
 import entities.ContactGroup;
 import entities.Entreprise;
+import entities.IContact;
 import entities.PhoneNumber;
 import util.HibernateUtil;
 
 public class ContactDAO implements IContactDAO {
+
+	private SessionFactory sessionFactory;
+
+	public ContactDAO(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public ContactDAO() {
 
@@ -51,13 +67,14 @@ public class ContactDAO implements IContactDAO {
 		try {
 			System.out.println("********************je suis dans addGroup********************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+		sessionFactory.getCurrentSession().save(group);
 
-			session.save(group);
-			tx.commit();
-
-			session.close();
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
+//			session.save(group);
+//			tx.commit();
+//
+//			session.close();
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -211,8 +228,31 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
+	public boolean addContactToGroup(Long idGroupe, Long idContact) {
+
+		try {
+
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			ContactGroup g = getGroupe(idGroupe);
+
+			Contact c = (Contact) session.get(Contact.class, idContact);
+			g.getContacts().add(c);
+			c.getGroups().add(g);
+
+			session.saveOrUpdate(g);
+			tx.commit();
+			session.close();
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	/*
-	 * *********************************** CRUD Contact*********************************
+	 * *********************************** CRUD
+	 * Contact*********************************
 	 */
 	@Override
 	public Contact getContact(long idContact) {
@@ -227,7 +267,7 @@ public class ContactDAO implements IContactDAO {
 	}
 
 	@Override
-	public Contact getContactFromName(String firstname, String lastname) {
+	public IContact getContactFromName(String firstname, String lastname) {
 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -248,7 +288,7 @@ public class ContactDAO implements IContactDAO {
 			}
 			Long id = Long.parseLong(String.valueOf(query.list().get(0)));
 
-			Contact c = (Contact) session.get(Contact.class, id);
+			IContact c = (IContact) session.get(Contact.class, id);
 			tx.commit();
 			session.close();
 
@@ -261,19 +301,33 @@ public class ContactDAO implements IContactDAO {
 	}
 
 	@Override
-	public void addContact(Contact contact) {
+	public void addContact(IContact contact) {
 
 		try {
-			System.out
-					.println("********************je suis dans addContact********************************************");
+			System.out.println("********************je suis dans addContact********************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+			sessionFactory.getCurrentSession().save(contact);
 
-			session.save(contact);
-			tx.commit();
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
+//
+//			session.save(contact);
+//			tx.commit();
+//
+//			session.close();
 
-			session.close();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+	}
+
+//Add Contact avec spring
+	public void addContactPeupler(IContact contact) {
+
+		try {
+			System.out.println(
+					"*******************je suis dans addContact peupler *******************************************");
+			sessionFactory.getCurrentSession().save(contact);
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -281,7 +335,7 @@ public class ContactDAO implements IContactDAO {
 	}
 
 	@Override
-	public void updateContact(Contact contact) {
+	public void updateContact(IContact contact) {
 
 		try {
 			System.out.println(
@@ -324,13 +378,15 @@ public class ContactDAO implements IContactDAO {
 			System.out.println(
 					"**************************   je suis dans DeleteContact   ************************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
 
-			Contact c = getContactFromName(firstname, lastname);
-			session.delete(c);
-			tx.commit();
-			session.close();
+			IContact c = getContactFromName(firstname, lastname);
+//			session.delete(c);
+//			tx.commit();
+//			session.close();
+			sessionFactory.getCurrentSession().delete(c);
+
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -342,14 +398,14 @@ public class ContactDAO implements IContactDAO {
 		try {
 			System.out.println(
 					"********************   je suis dans DeleteContact from contact's list   **********************************************");
-
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
-			Contact c = (Contact) session.get(Contact.class, id);
-			session.delete(c);
-			tx.commit();
-			session.close();
-
+			IContact c = (IContact) sessionFactory.getCurrentSession().get(Contact.class, id);
+			sessionFactory.getCurrentSession().delete(c);
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
+//			IContact c = (IContact) session.get(Contact.class, id);
+//			session.delete(c);
+//			tx.commit();
+//			session.close();
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -361,7 +417,6 @@ public class ContactDAO implements IContactDAO {
 		try {
 			System.out.println(
 					"*************************  je suis dans Liste des contacts    *********************************");
-
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
 
@@ -383,7 +438,7 @@ public class ContactDAO implements IContactDAO {
 	}
 
 	@Override
-	public Contact ReadContact(long id) {
+	public IContact ReadContact(long id) {
 
 		System.out.println("******************  je suis dans read   **********************");
 		try {
@@ -393,7 +448,7 @@ public class ContactDAO implements IContactDAO {
 			Query query = session.createQuery("from Contact where id =:id");
 			query.setParameter("id", id);
 
-			Contact c = (Contact) query.uniqueResult();
+			IContact c = (IContact) query.uniqueResult();
 			tx.commit();
 			session.close();
 

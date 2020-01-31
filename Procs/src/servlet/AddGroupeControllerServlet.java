@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
@@ -27,12 +30,15 @@ public class AddGroupeControllerServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 		try {
-			IContactDAO userDAO = new ContactDAO();
+			
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactDAO iContactDao = (IContactDAO)context.getBean("idContactDAO");
+			//IContactDAO userDAO = new ContactDAO();
 			// Creation du groupe
 			ContactGroup g = new ContactGroup(groupName);
 
 			// Sauvegarde du contact
-			userDAO.addGroup(g);
+			iContactDao.addGroup(g);
 
 			response.sendRedirect("Success");
 		} catch (Exception e) {
