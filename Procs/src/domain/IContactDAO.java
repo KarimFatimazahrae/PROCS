@@ -53,4 +53,6 @@ public interface IContactDAO {
 
 	void addContactPeupler(IContact contact);
 
+	//void addContact(Contact contact);
+
 }

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.Contact;
@@ -37,10 +40,13 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 		try {
-			IContactDAO userDAO = new ContactDAO();
+			
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactDAO iContactDao = (IContactDAO) context.getBean("idContactDAO");
+			//IContactDAO userDAO = new ContactDAO();
 			
 			/* Updating the Contact */		
-			Contact ctt = userDAO.getContact(id);
+			Contact ctt = iContactDao.getContact(id);
 			ctt.setFirstName(firstName);
 			ctt.setLastName(lastName);
 			ctt.setEmail(email);
@@ -63,7 +69,7 @@ public class UpdateContactControllerServletbis extends HttpServlet {
 			}
 			ctt.setTels(tels);
 			
-			userDAO.updateContact(ctt);
+			iContactDao.updateContact(ctt);
 			response.sendRedirect("Success");				
 
 		} catch (Exception e) {

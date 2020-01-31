@@ -67,7 +67,7 @@ public class ContactDAO implements IContactDAO {
 		try {
 			System.out.println("********************je suis dans addGroup********************************************");
 
-		sessionFactory.getCurrentSession().save(group);
+			sessionFactory.getCurrentSession().save(group);
 
 //			session = HibernateUtil.getSessionFactory().openSession();
 //			tx = session.beginTransaction();
@@ -256,13 +256,13 @@ public class ContactDAO implements IContactDAO {
 	 */
 	@Override
 	public Contact getContact(long idContact) {
-		session = HibernateUtil.getSessionFactory().openSession();
-		tx = session.beginTransaction();
-
-		Contact c = (Contact) session.get(Contact.class, idContact);
-		tx.commit();
-		session.close();
-
+//		session = HibernateUtil.getSessionFactory().openSession();
+//		tx = session.beginTransaction();
+//
+//		Contact c = (Contact) session.get(Contact.class, idContact);
+//		tx.commit();
+//		session.close();
+		Contact c = (Contact) sessionFactory.getCurrentSession().get(Contact.class, idContact);
 		return c;
 	}
 
@@ -304,7 +304,8 @@ public class ContactDAO implements IContactDAO {
 	public void addContact(IContact contact) {
 
 		try {
-			System.out.println("********************je suis dans addContact********************************************");
+			System.out
+					.println("********************je suis dans addContact********************************************");
 
 			sessionFactory.getCurrentSession().save(contact);
 
@@ -341,12 +342,14 @@ public class ContactDAO implements IContactDAO {
 			System.out.println(
 					"********************  je suis dans updateContact  ********************************************");
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
+			sessionFactory.getCurrentSession().saveOrUpdate(contact);
 
-			session.saveOrUpdate(contact);
-			tx.commit();
-			session.close();
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
+//
+//			session.saveOrUpdate(contact);
+//			tx.commit();
+//			session.close();
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -359,13 +362,14 @@ public class ContactDAO implements IContactDAO {
 		try {
 			System.out.println(
 					"********************  je suis dans updatePhone  ********************************************");
+			sessionFactory.getCurrentSession().save(phone1);
 
-			session = HibernateUtil.getSessionFactory().openSession();
-			tx = session.beginTransaction();
-
-			session.saveOrUpdate(phone1);
-			tx.commit();
-			session.close();
+//			session = HibernateUtil.getSessionFactory().openSession();
+//			tx = session.beginTransaction();
+//
+//			session.saveOrUpdate(phone1);
+//			tx.commit();
+//			session.close();
 
 		} catch (HibernateException e) {
 			e.printStackTrace();
@@ -386,7 +390,6 @@ public class ContactDAO implements IContactDAO {
 //			tx.commit();
 //			session.close();
 			sessionFactory.getCurrentSession().delete(c);
-
 
 		} catch (HibernateException e) {
 			e.printStackTrace();

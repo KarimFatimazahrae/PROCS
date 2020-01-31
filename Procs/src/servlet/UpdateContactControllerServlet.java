@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.ContactDAO;
 import domain.IContactDAO;
 import entities.PhoneNumber;
@@ -23,18 +26,21 @@ public class UpdateContactControllerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession(true);
 		try {
-				IContactDAO userDAO = new ContactDAO();
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IContactDAO iContactDao = (IContactDAO) context.getBean("idContactDAO");
+			// IContactDAO userDAO = new ContactDAO();
 			// Recuperer le contact à modifier
-			
-				Long id = Long.parseLong(request.getParameter("id").toString());
-				IContact cd = userDAO.ReadContact(id);
-				
-				request.setAttribute("Contact", cd);  
-				getServletConfig().getServletContext().getRequestDispatcher("/pages/modifierContact.jsp").forward(request,response);
-			} catch (Exception e) {
+
+			Long id = Long.parseLong(request.getParameter("id").toString());
+			IContact cd = iContactDao.ReadContact(id);
+
+			request.setAttribute("Contact", cd);
+			getServletConfig().getServletContext().getRequestDispatcher("/pages/modifierContact.jsp").forward(request,
+					response);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
