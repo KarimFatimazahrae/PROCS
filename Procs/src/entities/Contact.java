@@ -28,6 +28,11 @@ public class Contact implements IContact {
 		super();
 	}
 
+	public Contact(long id) {
+		super();
+		this.id = id;
+	}
+
 	public Contact(IContact uniqueResult) {
 		super();
 	}

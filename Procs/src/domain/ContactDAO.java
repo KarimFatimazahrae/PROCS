@@ -57,7 +57,6 @@ public class ContactDAO implements IContactDAO {
 		ContactGroup g = (ContactGroup) session.get(ContactGroup.class, idGroupe);
 		tx.commit();
 		session.close();
-
 		return g;
 	}
 
@@ -228,15 +227,15 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
+	@Override
 	public boolean addContactToGroup(Long idGroupe, Long idContact) {
-
 		try {
-
 			session = HibernateUtil.getSessionFactory().openSession();
 			tx = session.beginTransaction();
-			ContactGroup g = getGroupe(idGroupe);
-
 			Contact c = (Contact) session.get(Contact.class, idContact);
+			ContactGroup g = (ContactGroup) session.get(ContactGroup.class, idGroupe);
+			
+
 			g.getContacts().add(c);
 			c.getGroups().add(g);
 
@@ -440,6 +439,46 @@ public class ContactDAO implements IContactDAO {
 		}
 	}
 
+
+//	Affiche la Liste de tous les contacts
+	@Override
+	public List<Contact> listContactForGroup(Set<Contact> contactsinGroup) {
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			tx = session.beginTransaction();
+			
+			ArrayList<Long> listIds = new ArrayList<Long>();
+			System.out.println(
+					"*************************  " + listIds.toString());
+			List<Contact> lc = null;
+			for (Contact c : contactsinGroup) {
+				listIds.add(c.getId());
+			}
+				
+			if (listIds.isEmpty()) {
+				Query query = session.createQuery("from Contact");
+				System.out.println("\n");
+				System.out.println("liste des contacts: " + String.valueOf(query.list()));
+				lc = (List<Contact>) query.list();
+			} else {
+				Query query = session.createQuery("from Contact where id not in (:ids)");
+				query.setParameterList("ids", listIds);
+				System.out.println("\n");
+				System.out.println("liste des contacts: " + String.valueOf(query.list()));
+				lc = (List<Contact>) query.list();
+			}
+			tx.commit();
+			session.close();
+
+			return lc;
+
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	
 	@Override
 	public IContact ReadContact(long id) {
 
@@ -487,6 +526,26 @@ public class ContactDAO implements IContactDAO {
 
 		session.update(ad);
 		session.getTransaction().commit();
+	}
+	@Override
+	public List<Contact> searchContact(String search) {
+		// Recherche avec tous les paramètres renseignés
+		Session session = getSessionFactory().getCurrentSession();
+
+		Transaction tx = session.getTransaction();
+		if(!tx.isActive()) tx = session.beginTransaction();
+		System.out.println(search);
+		
+		List<Contact> listContact = session.createCriteria(Contact.class).add(Restrictions.like("firstName", "%"+search+"%")).list();
+		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("lastName", "%"+search+"%")).list());
+		listContact.addAll(session.createCriteria(Contact.class).add(Restrictions.like("email", "%"+search+"%")).list());
+		Set<Contact> setContact = new HashSet<>();
+		setContact.addAll(listContact);
+		listContact.clear();
+		listContact.addAll(setContact);
+		List<Contact> newListContact = new ArrayList<Contact>();
+		session.getTransaction().commit();
+		return newListContact;
 	}
 
 }

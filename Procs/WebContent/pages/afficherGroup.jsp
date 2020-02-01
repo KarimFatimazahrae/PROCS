@@ -2,6 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <%@page import="servlet.ListContactControllerServlet"%>
 <%@page import="entities.ContactGroup"%>
+<%@page import="entities.Contact"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.Set"%>
 <%@page import="entities.PhoneNumber"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +13,7 @@
 <title>Afficher le groupe</title>
 <%
 	ContactGroup g = (ContactGroup) request.getAttribute("ContactGroup");
+	Set<Contact> contacts = g.getContacts();
 %>
 </head>
 <body>
@@ -23,7 +27,20 @@
                 <td>GroupName :   </td>
                 <td><%=g.getGroupName()%></td>
             </tr>
-            
+            <%
+			for (Contact c : contacts) {
+			%>
+			<tr>
+                <td>First Name :   </td>
+                <td><%=c.getFirstName()%></td>
+            </tr>
+            <tr>
+                <td>Last Name :   </td>
+                <td><%=c.getLastName()%></td>
+            </tr>
+           <%
+			}
+			%>
         </table>
 </body>
 </html>

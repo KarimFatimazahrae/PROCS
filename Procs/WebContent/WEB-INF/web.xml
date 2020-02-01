@@ -73,6 +73,22 @@
 		<servlet-name>modifierGroup2</servlet-name>
 		<servlet-class>servlet.UpdateGroupControllerServletbis</servlet-class>
 	</servlet>
+	<servlet>
+		<display-name>ajouterContactauGroup</display-name>
+		<servlet-name>ajouterContactauGroup</servlet-name>
+		<servlet-class>servlet.AddContactToGroupControllerServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<display-name>ajouterContactUnique</display-name>
+		<servlet-name>ajouterContactUnique</servlet-name>
+		<servlet-class>servlet.AddContactToGroupControllerServletbis</servlet-class>
+	</servlet>
+	<servlet>
+		<description></description>
+		<display-name>SearchContactServlet</display-name>
+		<servlet-name>SearchContactServlet</servlet-name>
+		<servlet-class>servlet.SearchContactServlet</servlet-class>
+	</servlet>
 
 	<servlet>
 		<display-name>Success</display-name>
@@ -80,20 +96,17 @@
 		<servlet-class>servlet.Success</servlet-class>
 	</servlet>
 
-	<!-- 2) the second way is to use the lines below. Here you don't give explicitly the file name but it is supposed to be 
-    named applicationContext.xml -->
-    <listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+	<!-- 2) the second way is to use the lines below. Here you don't give explicitly 
+		the file name but it is supposed to be named applicationContext.xml -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	
-	<!-- In the above declations the beans will be scoped in the servlet context, using the 
-	listner given bellow your beans can request-scoped or session-scoped -->
+
+	<!-- In the above declations the beans will be scoped in the servlet context, 
+		using the listner given bellow your beans can request-scoped or session-scoped -->
 	<listener>
 		<listener-class>
-			org.springframework.web.context.request.RequestContextListener
-		</listener-class>
+			org.springframework.web.context.request.RequestContextListener</listener-class>
 	</listener>
 
 	<!--Servlet mapping -->
@@ -109,6 +122,11 @@
 		<servlet-name>modifierContact</servlet-name>
 		<url-pattern>/modifierContact</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ajouterContactUnique</servlet-name>
+		<url-pattern>/ajouterContactUnique</url-pattern>
+	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>modifierContact2</servlet-name>
 		<url-pattern>/modifierContact2</url-pattern>
@@ -153,9 +171,18 @@
 	</servlet-mapping>
 
 	<servlet-mapping>
+		<servlet-name>SearchContactServlet</servlet-name>
+		<url-pattern>/SearchContactServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ajouterContactauGroup</servlet-name>
+		<url-pattern>/ajouterContactauGroup</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>Success</servlet-name>
 		<url-pattern>/Success</url-pattern>
 	</servlet-mapping>
+
 
 	<welcome-file-list>
 		<welcome-file>pages/acceuil.jsp</welcome-file>

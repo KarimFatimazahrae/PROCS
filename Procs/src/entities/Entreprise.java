@@ -15,6 +15,7 @@ public class Entreprise extends Contact {
 		this.numeroSiret = numeroSiret;
 	}
 
+	
 	public Entreprise( String firstName, String lastName, String email,long numeroSiret){
 		super(firstName, lastName, email);
 		this.numeroSiret=numeroSiret;

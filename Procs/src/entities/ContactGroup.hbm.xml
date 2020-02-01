@@ -8,7 +8,7 @@
   <id name="groupId" type="long" column="ID_GROUP" > <generator class="increment"/></id>
   <property name="groupName"  type="string" not-null="true" unique="true"><column name="GROUPNAME" /></property>
   
-  <set name="contacts" table="PROFIL" inverse="true" >  
+  <set name="contacts" table="PROFIL" inverse="true" fetch="join" lazy="false"   >  
 	<key column="ID_GROUPE"/>  
 	<many-to-many class="Contact" column="ID_CONTACT"  />  
   </set>

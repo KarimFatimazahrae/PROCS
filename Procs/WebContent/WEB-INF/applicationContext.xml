@@ -107,16 +107,13 @@
        	<property name="groupName" value="Miage"/>
        </bean>
        
-      <!--  <bean id="idContact" class="entities.Contact">
-        	<property name="firstName" value="BNP" />
-        	
-        </bean>
-      <bean id="iContact" abstract="true">
+      <bean id="idEntreprise" class="entities.Entreprise">
+       <constructor-arg type="String"><value>BNPP</value></constructor-arg>
+       <constructor-arg type="String"><value>Entreprise</value></constructor-arg>
+       <constructor-arg type="long"><value>0202020</value></constructor-arg>
+       <constructor-arg type="String"><value>"bnpp@gmail.com"</value></constructor-arg>
+       <property name="adresse"><ref bean="idAddress"/> </property>
        </bean>
-       
-       <bean id="idEntreprise" parent="idContact" class="org.springframework.samples.jpetstore.entities.Contact">
-       <property name="numeroSiret" value="020202093992" />
-       </bean> -->
 		
 
 </beans>

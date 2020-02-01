@@ -23,6 +23,7 @@
 			<th>Afficher</th>
 			<th>Modifier</th>
 			<th>Supprimer</th>
+			<th>Ajouter contact au groupe</th>
 		</tr>
 		<%
 			for (ContactGroup g : list) {
@@ -48,6 +49,12 @@
 					<p />
 					<input type="hidden" name="id" value="<%=g.getGroupId()%>" />
 					<input type="submit" value="Supprimer Groupe" />
+				</form></td>
+			<td><form
+					action="${pageContext.request.contextPath}/ajouterContactauGroup" method="post">
+					<p />
+					<input type="hidden" name="id" value="<%=g.getGroupId()%>" />
+					<input type="submit" value="Ajouter contact au groupe" />
 				</form></td>
 		</tr>
 

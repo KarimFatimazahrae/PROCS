@@ -19,6 +19,11 @@ public class ContactGroup {
 		this.groupName = groupName;
 	}
 
+	public ContactGroup(long groupId) {
+		super();
+		this.groupId = groupId;
+	}
+
 	public long getGroupId() {
 		return groupId;
 	}

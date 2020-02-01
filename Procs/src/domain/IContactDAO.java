@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.List;
+import java.util.Set;
 
 import entities.Address;
 import entities.Contact;
@@ -52,6 +53,12 @@ public interface IContactDAO {
 	void updateGroup(ContactGroup groupe);
 
 	void addContactPeupler(IContact contact);
+
+	List<Contact> searchContact(String search);
+
+	List<Contact> listContactForGroup(Set<Contact> contactsinGroup);
+
+	boolean addContactToGroup(Long idGroupe, Long idContact);
 
 	//void addContact(Contact contact);
 

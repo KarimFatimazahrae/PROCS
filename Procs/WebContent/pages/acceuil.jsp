@@ -44,5 +44,11 @@
         <input type="submit" value="Afficher Groupes" />
     </form>
     
+    <h1>Recherche par Nom</h1>
+    <form action="${pageContext.request.contextPath}/SearchContactServlet" method="get">
+    <p />
+        <input type="submit" value="Recherche" />
+    </form>
+    
 </body>
 </html>
